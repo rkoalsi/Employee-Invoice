@@ -5,12 +5,26 @@
   "scripts": {
     "start": "nodemon ./bin/www"
   },
+  "_moduleAliases": {
+    "@bin": "./bin",
+    "@helpers": "./helpers",
+    "@models": "./models",
+    "@public": "./public",
+    "@routes": "./routes",
+    "@views": "./views"
+  },
+  "_moduleDirectories": [
+    "node_modules"
+  ],
   "dependencies": {
+    "body-parser": "^1.20.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "dotenv": "^16.0.3",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
+    "module-alias": "^2.2.2",
     "mongoose": "^6.8.0",
     "morgan": "~1.9.1"
   },

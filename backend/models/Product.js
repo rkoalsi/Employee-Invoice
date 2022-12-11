@@ -1,15 +1,15 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const ProductSchema = new Schema(
   {
-    name: String,
-    sku: String,
-    hsn: String,
-    price: String,
-    gst: String,
-    organization: Schema.Types.ObjectId,
-    createdBy: Schema.Types.ObjectId,
+    name: { type: String, required: true },
+    sku: { type: String, required: true },
+    hsn: { type: String, required: true },
+    price: { type: String, required: true },
+    gst: { type: String, required: true },
+    organization: { type: Schema.Types.ObjectId, required: true },
+    createdBy: { type: Schema.Types.ObjectId, required: true },
   },
   {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },

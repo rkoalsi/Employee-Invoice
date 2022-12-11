@@ -1,12 +1,12 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const CustomerSchema = new Schema(
   {
-    name: String,
-    gstin: String,
-    shop: String,
-    phone: Number,
+    name: { type: String, required: true },
+    gstin: { type: String, required: true },
+    shop: { type: String, required: true },
+    phone: { type: Number, required: true, unique: true },
   },
   {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
