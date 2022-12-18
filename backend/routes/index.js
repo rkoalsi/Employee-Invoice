@@ -1,12 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const {
-  getUser,
-  getUsers,
-  createUser,
-  updateUser,
-  deleteUser,
-} = require('./user');
+const { getUser, getUsers, updateUser, deleteUser } = require('./user');
 const {
   getEstimates,
   getEstimate,
@@ -70,9 +64,6 @@ router.get('/users', getUsers);
 
 /* GET User */
 router.get('/user', getUser);
-
-/* POST User */
-router.post('/user', createUser);
 
 /* UPDATE User */
 router.patch('/user', updateUser);

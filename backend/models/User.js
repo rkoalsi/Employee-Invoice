@@ -10,7 +10,12 @@ const UserSchema = new Schema(
     invoices: { type: [Schema.Types.ObjectId], default: [] },
     salesOrders: { type: [Schema.Types.ObjectId], default: [] },
     estimates: { type: [Schema.Types.ObjectId], default: [] },
-    isAdmin: { type: Boolean, required: true },
+    role: {
+      type: String,
+      enum: ['customer', 'employee', 'admin'],
+      default: 'employee',
+      required: true,
+    },
     employees: { type: [Schema.Types.ObjectId], default: [] },
     designation: { type: String, required: true },
   },

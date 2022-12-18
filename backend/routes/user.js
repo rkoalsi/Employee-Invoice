@@ -16,14 +16,6 @@ async function getUser(req, res) {
     res.send(error);
   }
 }
-async function createUser(req, res) {
-  try {
-    const user = await User.create(req.body);
-    res.send(user);
-  } catch (error) {
-    res.send(error);
-  }
-}
 async function updateUser(req, res, next) {
   try {
     const user = await User.updateOne({ _id: req.body.id }, req.body);
@@ -40,4 +32,4 @@ async function deleteUser(req, res, next) {
     res.send(error);
   }
 }
-module.exports = { getUsers, getUser, createUser, updateUser, deleteUser };
+module.exports = { getUsers, getUser, updateUser, deleteUser };
