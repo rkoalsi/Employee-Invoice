@@ -1,14 +1,15 @@
-import styled from 'styled-components';
-import colors from '../../constants';
+import React from 'react';
+import TextField from '@mui/material/TextField';
 
-interface InputProps {
-  colors?: String;
+function Input(props: any) {
+  const { ...rest } = props;
+
+  return (
+    <TextField
+      {...rest}
+      sx={{ input: { color: 'black', backgroundColor: 'white' } }}
+    />
+  );
 }
-const Input = styled.input<InputProps>`
-  color: ${(p: any) => p.color ?? colors.black};
-  height: 25px;
-  width: 300px;
-  border-radius: 8px;
-`;
 
 export default Input;

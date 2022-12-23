@@ -9,11 +9,11 @@ function home(req, res) {
 async function register(req, res) {
   const { password, ...rest } = req.body;
   try {
-    const hash = bcrypt.hash(password, 10);
+    const hash = await bcrypt.hash(password, 10);
     const data = { password: hash, ...rest };
     const user = await User.create(data);
-    const token = await createToken(user);
-    res.send({ token, ...user });
+    const token = await createToken(data.email);
+    res.status(200).send({ token: token.value, user });
   } catch (error) {
     res.send(error);
   }
@@ -22,10 +22,17 @@ async function login(req, res) {
   const { password, email } = req.body;
   try {
     const user = await User.findOne({ email });
-    const check = bcrypt.compare(password, user.password);
-    const token = await createToken(user);
-    if (check) res.status(200).send(token);
-    else res.status(404).send('User not Found');
+    if (user) {
+      const check = await bcrypt.compare(password, user.password);
+      if (check) {
+        const token = await createToken(user.email);
+        res.status(200).send({ token: token.value, user });
+      } else {
+        res.status(400).send('Password is Incorrect');
+      }
+    } else {
+      res.status(400).send('User not Found');
+    }
   } catch (error) {
     res.send(error);
   }

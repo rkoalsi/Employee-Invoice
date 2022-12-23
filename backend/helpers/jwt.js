@@ -2,13 +2,13 @@ const jwt = require('json-web-token');
 
 require('dotenv').config();
 
-const createToken = (data) => {
-  const token = jwt.sign(data, process.env.SECRET);
+const createToken = async (data) => {
+  const token = await jwt.encode(data, process.env.SECRET);
   return token;
 };
 
-const verifyToken = (token) => {
-  const verified = jwt.verify(token, process.env.SECRET);
+const verifyToken = async (token) => {
+  const verified = await jwt.decode(token, process.env.SECRET);
   return verified;
 };
 
