@@ -20,11 +20,6 @@ import { useUserContext } from '../../context/user';
 interface Props {}
 
 function Login(props: Props) {
-  return <Example />;
-}
-
-function Example(props: Props) {
-  const {} = props;
   const [error, setError] = React.useState<any>({ status: false, message: '' });
   const [user, setUser] = useUserContext();
   const [data, setData] = React.useState<any>({
@@ -35,11 +30,12 @@ function Example(props: Props) {
     try {
       const w = await login(data);
       setUser(w.data);
+      console.log(w.data);
       if (w.status == 200) {
         Router.push('/');
       }
     } catch (error: any) {
-      if (error.response.status == 400) {
+      if (error && error.response && error.response.status == 400) {
         setError({ status: true, message: error.response.data });
       } else {
         setError({ status: true, message: error.message });

@@ -1,7 +1,9 @@
 const SalesOrder = require('@models/SalesOrder');
 async function getSalesOrders(req, res) {
   try {
-    const so = await SalesOrder.find();
+    const so = await SalesOrder.find({
+      organizationId: req.query.organizationId,
+    });
     res.send(so);
   } catch (error) {
     res.send(error);

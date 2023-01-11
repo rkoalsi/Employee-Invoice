@@ -1,7 +1,9 @@
 const Invoice = require('@models/Invoice');
 async function getInvoices(req, res) {
   try {
-    const inv = await Invoice.find();
+    const inv = await Invoice.find({
+      organizationId: req.query.organizationId,
+    });
     res.send(inv);
   } catch (error) {
     res.send(error);

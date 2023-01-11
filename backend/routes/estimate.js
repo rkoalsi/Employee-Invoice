@@ -2,7 +2,9 @@ const Estimate = require('@models/Estimate');
 
 async function getEstimates(req, res) {
   try {
-    const est = await Estimate.find();
+    const est = await Estimate.find({
+      organizationId: req.query.organizationId,
+    });
     res.send(est);
   } catch (error) {
     res.send(error);

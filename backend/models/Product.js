@@ -8,7 +8,7 @@ const ProductSchema = new Schema(
     hsn: { type: String, required: true },
     price: { type: String, required: true },
     gst: { type: String, required: true },
-    organization: { type: Schema.Types.ObjectId, required: true },
+    organizationId: { type: Schema.Types.ObjectId, required: true },
     createdBy: { type: Schema.Types.ObjectId, required: true },
   },
   {

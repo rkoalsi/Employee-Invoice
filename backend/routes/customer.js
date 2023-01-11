@@ -1,7 +1,9 @@
 const Customer = require('@models/Customer');
 async function getCustomers(req, res) {
   try {
-    const org = await Customer.find();
+    const org = await Customer.find({
+      organizationId: req.query.organizationId,
+    });
     res.send(org);
   } catch (error) {
     res.send(error);
@@ -25,7 +27,7 @@ async function createCustomer(req, res) {
 }
 async function updateCustomer(req, res) {
   try {
-    const customer = await Customer.updateOne({ _id: req.body.id }, req.body);
+    const customer = await Customer.updateOne({ _id: req.body._id }, req.body);
     res.send(`${customer.modifiedCount} Item Successfully Modified`);
   } catch (error) {
     res.send(error);
@@ -33,7 +35,7 @@ async function updateCustomer(req, res) {
 }
 async function deleteCustomer(req, res) {
   try {
-    const customer = await Customer.deleteOne({ _id: req.body.id });
+    const customer = await Customer.deleteOne({ _id: req.query.id });
     res.send(`${customer.deletedCount} Item Successfully Deleted`);
   } catch (error) {
     res.send(error);

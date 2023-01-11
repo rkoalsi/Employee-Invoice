@@ -2,8 +2,7 @@ import React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+import Toast from '../common/Toast';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -15,29 +14,38 @@ import { register } from '../../api/auth';
 import Copyright from '../common/Copyright';
 import Input from '../common/Input';
 import { useUserContext } from '../../context/user';
+import DropDown from '../common/DropDown';
+import { SIGNUP_VERIFICATION_SCHEMA } from '../../helpers/validators';
 
 interface Props {}
 
 function Register(props: Props) {
   const {} = props;
+  const [error, setError] = React.useState<any>({ status: false, message: '' });
   const [user, setUser] = useUserContext();
   const [data, setData] = React.useState<any>({
-    name: 'Paolo',
-    organizationId: '639590dbf80e6413b86ede80',
-    designation: 'Employee',
-    email: 'rohan@mapout.com',
-    password: 'hello1',
+    name: '',
+    organizationId: '',
+    designation: '',
+    email: '',
+    password: '',
   });
 
   const onClickRegister = async () => {
     try {
+      const user = await SIGNUP_VERIFICATION_SCHEMA.validate(data);
+      if (user) {
+        try {
+          const w = await register(data);
+          setUser(w.data);
+          if (w.status == 200) Router.push('/');
+        } catch (error: any) {
+          console.log(error.response.data);
+        }
+      }
+    } catch (err: any) {
+      setError({ status: true, message: error.message });
       console.log(data);
-      const w = await register(data);
-      setUser(w.data);
-      console.log(w.data);
-      if (w.status == 200) Router.push('/');
-    } catch (error: any) {
-      console.log(error.response.data);
     }
   };
 
@@ -63,8 +71,15 @@ function Register(props: Props) {
     }
   };
 
+  const items = [
+    { value: 'admin', name: 'Admin' },
+    { value: 'customer', name: 'Customer' },
+    { value: 'employee', name: 'Employee' },
+  ];
+
   return (
     <Container component='main' maxWidth='xs'>
+      <Toast error={error} />
       <CssBaseline />
       <Box
         sx={{
@@ -119,18 +134,6 @@ function Register(props: Props) {
             </Grid>
             <Grid item xs={12}>
               <Input
-                onChange={(e: any) => onChange('designation', e.target.value)}
-                required
-                fullWidth
-                name='designation'
-                label='Designation'
-                type='designation'
-                id='designation'
-                autoComplete='new-password'
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Input
                 onChange={(e: any) =>
                   onChange('organizationId', e.target.value)
                 }
@@ -144,9 +147,10 @@ function Register(props: Props) {
               />
             </Grid>
             <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value='allowExtraEmails' color='primary' />}
-                label='I want to receive inspiration, marketing promotions and updates via email.'
+              <DropDown
+                items={items}
+                label={'Designation'}
+                onChange={onChange}
               />
             </Grid>
           </Grid>

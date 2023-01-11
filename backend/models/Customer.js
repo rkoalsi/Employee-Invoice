@@ -7,6 +7,7 @@ const CustomerSchema = new Schema(
     gstin: { type: String, required: true },
     shop: { type: String, required: true },
     phone: { type: Number, required: true, unique: true },
+    organizationId: { type: Schema.Types.ObjectId, required: true },
   },
   {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
