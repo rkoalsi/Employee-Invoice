@@ -20,6 +20,7 @@ function CustomersDrawer(props: any) {
       setOpen={setOpen}
       setValues={setValues}
       setIsEdit={setIsEdit}
+      values={{ name: '', shop: '', gstin: '', phone: '' }}
     >
       <Box m={2} display={'flex'} flexDirection={'column'} gap={'16px'}>
         <TextField

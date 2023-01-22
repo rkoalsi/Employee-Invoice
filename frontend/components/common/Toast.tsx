@@ -34,6 +34,28 @@ function Toast(props: Props) {
           </Alert>
         </Collapse>
       )}
+      {error.status === 'success' && (
+        <Collapse in={open}>
+          <Alert
+            severity={'success'}
+            color={'success'}
+            action={
+              <IconButton
+                aria-label='close'
+                color='inherit'
+                size='small'
+                onClick={() => {
+                  setOpen(false);
+                }}
+              >
+                <CloseIcon fontSize='inherit' />
+              </IconButton>
+            }
+          >
+            {error.message}
+          </Alert>
+        </Collapse>
+      )}
     </>
   );
 }

@@ -1,21 +1,34 @@
 import React from 'react';
 import { useUserContext } from '../../context/user';
 import Router, { useRouter } from 'next/router';
-import { Button, Box, Grid } from '@mui/material';
-import Card from '../common/Card';
+import { Button, Box, Grid, Typography } from '@mui/material';
 import { getCustomers } from '../../api/customer';
 import axios from 'axios';
 import { getInvoices } from '../../api/invoice';
 import { getProducts } from '../../api/product';
 import { getEstimates } from '../../api/estimate';
 import { getSalesOrders } from '../../api/salesOrder';
+import DashCard from '../common/DashboardCard';
+import {
+  ArticleOutlined,
+  GroupOutlined,
+  Inventory2Outlined,
+  RequestPageOutlined,
+  ShoppingBasketOutlined,
+} from '@mui/icons-material';
 interface Props {}
 
 function Home(props: Props) {
   const {} = props;
   const router = useRouter();
   const [user, setUser] = useUserContext();
-  const [data, setData] = React.useState([]);
+  const [data, setData] = React.useState<[{}][]>([
+    [{}],
+    [{}],
+    [{}],
+    [{}],
+    [{}],
+  ]);
   const getData = async () => {
     try {
       const res = await axios.all([
@@ -55,33 +68,51 @@ function Home(props: Props) {
         justifyContent='center'
         alignItems='center'
       >
-        Welcome {user.user.name}. You are an {user.user.role}
+        <Typography variant={'h2'}>
+          Welcome {user.user.name}. You are an {user.user.role}
+        </Typography>
         <br /> <br />
-        <Grid m={2} container spacing={1} direction={'column'}>
+        <Grid
+          container
+          spacing={4}
+          direction={'row'}
+          alignItems={'center'}
+          justifyContent={'center'}
+        >
           <Grid item>
-            <Card onClick={() => router.push('/customers')}>
-              Total number of Customers: {data[0]?.length}
-            </Card>
+            <DashCard
+              icon={<GroupOutlined />}
+              text={`Total Customers: ${data[0]?.length}`}
+              onClick={() => router.push('/customers')}
+            />
           </Grid>
           <Grid item>
-            <Card onClick={() => router.push('/products')}>
-              Total number of Products: {data[1]?.length}
-            </Card>
+            <DashCard
+              icon={<ShoppingBasketOutlined />}
+              text={`Total Products: ${data[1]?.length}`}
+              onClick={() => router.push('/products')}
+            />
           </Grid>
           <Grid item>
-            <Card onClick={() => router.push('/estimates')}>
-              Total number of Estimates: {data[2]?.length}
-            </Card>
+            <DashCard
+              icon={<ArticleOutlined />}
+              text={`Total Estimates: ${data[2]?.length}`}
+              onClick={() => router.push('/estimates')}
+            />
           </Grid>
           <Grid item>
-            <Card onClick={() => router.push('/sales-orders')}>
-              Total number of Sales Orders: {data[3]?.length}
-            </Card>
+            <DashCard
+              icon={<Inventory2Outlined />}
+              text={`Total Sales Orders: ${data[3]?.length}`}
+              onClick={() => router.push('/sales-orders')}
+            />
           </Grid>
           <Grid item>
-            <Card onClick={() => router.push('/invoices')}>
-              Total number of Invoices: {data[4]?.length}
-            </Card>
+            <DashCard
+              icon={<RequestPageOutlined />}
+              text={`Total Invoices: ${data[4]?.length}`}
+              onClick={() => router.push('/invoices')}
+            />
           </Grid>
         </Grid>
       </Box>

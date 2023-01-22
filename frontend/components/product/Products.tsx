@@ -25,6 +25,7 @@ function Products(props: Props) {
     gst: '',
     price: '',
     hsn: '',
+    stock: 1,
   });
 
   const createData = async () => {
@@ -71,6 +72,7 @@ function Products(props: Props) {
     try {
       const res = await getProducts(user.user.organizationId);
       if (res.status == 200) {
+        console.log(res.data[0]);
         setData(res.data);
       }
     } catch (error) {
@@ -98,6 +100,9 @@ function Products(props: Props) {
         break;
       case 'price':
         setValues({ ...values, price: e.target.value });
+        break;
+      case 'stock':
+        setValues({ ...values, stock: e.target.value });
         break;
       default:
         break;
@@ -130,7 +135,16 @@ function Products(props: Props) {
         setIsEdit={setIsEdit}
       />
       <ProductTable
-        columns={['Name', 'Sku', 'HSN', 'GST', 'Price', 'Delete', 'Edit']}
+        columns={[
+          'Name',
+          'Sku',
+          'HSN',
+          'GST',
+          'Price',
+          'Stock',
+          'Delete',
+          'Edit',
+        ]}
         rows={data}
         open={open}
         setOpen={setOpen}

@@ -5,14 +5,23 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 export default function DropDown(props: any) {
-  const { items, label, onChange, onChangeTitle = 'description' } = props;
-  const [val, setVal] = React.useState('');
-
+  const {
+    items,
+    label,
+    onChange,
+    onChangeTitle = 'description',
+    onChangeIndex = null,
+    value = '',
+  } = props;
+  const [val, setVal] = React.useState(value);
   const handleChange = (event: SelectChangeEvent) => {
     setVal(event.target.value);
-    onChange(onChangeTitle, event.target.value);
+    if (onChangeIndex >= 0) {
+      onChange(onChangeTitle, event.target.value, onChangeIndex);
+    } else {
+      onChange(onChangeTitle, event.target.value);
+    }
   };
-
   return (
     <FormControl sx={{ minWidth: 160 }}>
       <InputLabel id='demo-select-small'>{label}</InputLabel>

@@ -16,11 +16,15 @@ import Toast from '../common/Toast';
 import Copyright from '../common/Copyright';
 import Input from '../common/Input';
 import { useUserContext } from '../../context/user';
+import { SIGNIN_VERIFICATION_SCHEMA } from '../../helpers/validators';
 
 interface Props {}
 
 function Login(props: Props) {
-  const [error, setError] = React.useState<any>({ status: false, message: '' });
+  const [error, setError] = React.useState<{
+    status: boolean | string;
+    message: string;
+  }>({ status: false, message: '' });
   const [user, setUser] = useUserContext();
   const [data, setData] = React.useState<any>({
     email: '',
@@ -28,18 +32,31 @@ function Login(props: Props) {
   });
   const onClickSignin = async () => {
     try {
-      const w = await login(data);
-      setUser(w.data);
-      console.log(w.data);
-      if (w.status == 200) {
-        Router.push('/');
+      const check = await SIGNIN_VERIFICATION_SCHEMA.validate(data, {
+        abortEarly: false,
+      });
+      if (check) {
+        try {
+          const w = await login(data);
+          if (w.data.errors) {
+            setError({ status: true, message: w.data.message });
+          } else {
+            setError({ status: 'success', message: 'Successfully Logged In' });
+            setUser(w.data);
+            Router.push('/');
+          }
+        } catch (error: any) {
+          if (error && error.response && error.response.status == 400) {
+            setError({ status: true, message: error.response.data });
+          } else {
+            setError({ status: true, message: error.message });
+          }
+        }
       }
-    } catch (error: any) {
-      if (error && error.response && error.response.status == 400) {
-        setError({ status: true, message: error.response.data });
-      } else {
-        setError({ status: true, message: error.message });
-      }
+    } catch (err: any) {
+      err.inner.forEach((e: any) => {
+        setError({ status: true, message: e.message });
+      });
     }
   };
 

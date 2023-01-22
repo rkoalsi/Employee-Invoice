@@ -7,16 +7,17 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { DeleteForever, Edit } from '@mui/icons-material';
+import { deleteCustomer } from '../../api/customer';
 
-export default function ProductTable(props: any) {
-  const { columns, rows, setOpen, setValues, setIsEdit, deleteData } = props;
+export default function EmployeeTable(props: any) {
+  const { columns, rows, setOpen, setValues, setIsEdit } = props;
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label='simple table'>
         <TableHead>
           <TableRow>
-            {columns.map((c: string) => (
-              <TableCell key={c}>{c}</TableCell>
+            {columns.map((c: String) => (
+              <TableCell>{c}</TableCell>
             ))}
           </TableRow>
         </TableHead>
@@ -29,13 +30,13 @@ export default function ProductTable(props: any) {
               <TableCell component='th' scope='row'>
                 {row.name}
               </TableCell>
-              <TableCell>{row.sku}</TableCell>
-              <TableCell>{row.hsn}</TableCell>
-              <TableCell>{row.gst}</TableCell>
-              <TableCell>{row.price}</TableCell>
-              <TableCell>{row.stock}</TableCell>
+              <TableCell>{row.role}</TableCell>
+              <TableCell>{row.email}</TableCell>
+              {/* <TableCell>{row.phone}</TableCell> */}
               <TableCell>
-                <DeleteForever onClick={() => deleteData(row._id)} />
+                <DeleteForever
+                  onClick={async () => await deleteCustomer(row._id)}
+                />
               </TableCell>
               <TableCell>
                 <Edit

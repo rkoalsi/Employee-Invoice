@@ -10,8 +10,8 @@ export const getEstimates = (query: string) =>
 
 export const getEstimate = (body: any) => axios.get(`${base}/estimate`, body);
 
-export const deleteEstimate = (body: any) =>
-  axios.delete(`${base}/estimate`, body);
+export const deleteEstimate = (query: string) =>
+  axios.delete(`${base}/estimate?id=${query}`);
 
 export const updateEstimate = (body: any) =>
   axios.patch(`${base}/estimate`, body);

@@ -1,6 +1,12 @@
 var express = require('express');
 var router = express.Router();
-const { getUser, getUsers, updateUser, deleteUser } = require('./user');
+const {
+  getUser,
+  getUsers,
+  updateUser,
+  deleteUser,
+  getUserByOrg,
+} = require('./user');
 const {
   getEstimates,
   getEstimate,
@@ -49,13 +55,16 @@ const { register, login, resetPassword, home } = require('./auth');
 router.get('/', home);
 
 //Authentication
-/*TODO: Register User */
+/* Register User */
+
 router.post('/register', register);
 
-/*TODO: Login User */
+/* Login User */
+
 router.post('/login', login);
 
-/*TODO: Reset User Password */
+/* Reset User Password */
+
 router.post('/reset-password', resetPassword);
 
 //Users
@@ -64,6 +73,9 @@ router.get('/users', getUsers);
 
 /* GET User */
 router.get('/user', getUser);
+
+/* GET User By OrganizationId */
+router.get('/userOrg', getUserByOrg);
 
 /* UPDATE User */
 router.patch('/user', updateUser);

@@ -9,7 +9,7 @@ async function getOrganizations(req, res) {
 }
 async function getOrganization(req, res) {
   try {
-    const org = await Organization.findById(req.body.id);
+    const org = await Organization.findById(req.query.id);
     res.send(org);
   } catch (error) {
     res.send(error);

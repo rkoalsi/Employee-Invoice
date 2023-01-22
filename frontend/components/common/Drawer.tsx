@@ -4,7 +4,16 @@ import styled from 'styled-components';
 import { Button, Box } from '@mui/material';
 
 export default function BDrawer(props: any) {
-  const { open, setOpen, setValues, setIsEdit } = props;
+  const {
+    open,
+    setOpen,
+    setValues,
+    setIsEdit,
+    values,
+    onClickSubmit,
+    buttonText,
+    onClickCancel,
+  } = props;
   const toggleDrawer = (open: boolean) => {
     setOpen(open);
   };
@@ -15,10 +24,10 @@ export default function BDrawer(props: any) {
           onClick={() => {
             toggleDrawer(true);
             setIsEdit(false);
-            setValues({ name: '', shop: '', gstin: '', phone: '' });
+            setValues(values);
           }}
         >
-          {props.buttonText}
+          {buttonText}
         </Button>
         <Drawer
           anchor={'right'}
@@ -35,7 +44,12 @@ export default function BDrawer(props: any) {
             <Button
               variant={'outlined'}
               color={'error'}
-              onClick={() => toggleDrawer(false)}
+              onClick={() => {
+                toggleDrawer(false);
+                setIsEdit(false);
+                setValues(values);
+                onClickCancel();
+              }}
             >
               Cancel
             </Button>
@@ -43,7 +57,8 @@ export default function BDrawer(props: any) {
               variant={'outlined'}
               onClick={() => {
                 toggleDrawer(false);
-                props.onClickSubmit();
+                onClickSubmit();
+                onClickCancel();
               }}
             >
               Submit

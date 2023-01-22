@@ -18,7 +18,11 @@ import DropDown from '../common/DropDown';
 import { SIGNUP_VERIFICATION_SCHEMA } from '../../helpers/validators';
 
 interface Props {}
-
+export const ROLES = [
+  { value: 'admin', name: 'Admin' },
+  { value: 'customer', name: 'Customer' },
+  { value: 'employee', name: 'Employee' },
+];
 function Register(props: Props) {
   const {} = props;
   const [error, setError] = React.useState<any>({ status: false, message: '' });
@@ -33,19 +37,27 @@ function Register(props: Props) {
 
   const onClickRegister = async () => {
     try {
-      const user = await SIGNUP_VERIFICATION_SCHEMA.validate(data);
-      if (user) {
+      const check = await SIGNUP_VERIFICATION_SCHEMA.validate(data, {
+        abortEarly: false,
+      });
+      if (check) {
         try {
           const w = await register(data);
-          setUser(w.data);
-          if (w.status == 200) Router.push('/');
+          if (w.data.errors) {
+            setError({ status: true, message: w.data.message });
+          } else {
+            setError({ status: 'success', message: 'Successfully Logged In' });
+            setUser(w.data);
+            Router.push('/');
+          }
         } catch (error: any) {
           console.log(error.response.data);
         }
       }
     } catch (err: any) {
-      setError({ status: true, message: error.message });
-      console.log(data);
+      err.inner.forEach((e: any) => {
+        setError({ status: true, message: e.message });
+      });
     }
   };
 
@@ -70,12 +82,6 @@ function Register(props: Props) {
         break;
     }
   };
-
-  const items = [
-    { value: 'admin', name: 'Admin' },
-    { value: 'customer', name: 'Customer' },
-    { value: 'employee', name: 'Employee' },
-  ];
 
   return (
     <Container component='main' maxWidth='xs'>
@@ -148,8 +154,9 @@ function Register(props: Props) {
             </Grid>
             <Grid item xs={12}>
               <DropDown
-                items={items}
+                items={ROLES}
                 label={'Designation'}
+                onChangeTitle={'designation'}
                 onChange={onChange}
               />
             </Grid>

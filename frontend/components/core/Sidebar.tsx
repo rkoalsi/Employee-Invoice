@@ -6,35 +6,57 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import { useUserContext } from '../../context/user';
 import { Button } from '@mui/material';
+import {
+  ArticleOutlined,
+  CorporateFareOutlined,
+  GroupOutlined,
+  Home,
+  Inventory2Outlined,
+  PeopleOutline,
+  Person2Outlined,
+  RequestPageOutlined,
+  ShoppingBasketOutlined,
+} from '@mui/icons-material';
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
 const NAVIGATION = {
-  customer: [{ label: 'Home', value: '/' }],
+  customer: [{ label: 'Home', value: '/', icon: <Home /> }],
   employee: [
-    { label: 'Home', value: '/' },
-    { label: 'Customers', value: 'customers' },
-    { label: 'Products', value: 'products' },
-    { label: 'Estimates', value: 'estimates' },
-    { label: 'Sales Orders', value: 'sales-orders' },
-    { label: 'Invoices', value: 'invoices' },
+    { label: 'Home', value: '/', icon: <Home /> },
+    { label: 'Customers', value: 'customers', icon: <GroupOutlined /> },
+    { label: 'Products', value: 'products', icon: <ShoppingBasketOutlined /> },
+    { label: 'Estimates', value: 'estimates', icon: <ArticleOutlined /> },
+    {
+      label: 'Sales Orders',
+      value: 'sales-orders',
+      icon: <Inventory2Outlined />,
+    },
+    { label: 'Invoices', value: 'invoices', icon: <RequestPageOutlined /> },
   ],
   admin: [
-    { label: 'Home', value: '/' },
-    { label: 'Employees', value: 'employees' },
-    { label: 'Organization', value: 'organization' },
-    { label: 'Customers', value: 'customers' },
-    { label: 'Products', value: 'products' },
-    { label: 'Estimates', value: 'estimates' },
-    { label: 'Sales Orders', value: 'sales-orders' },
-    { label: 'Invoices', value: 'invoices' },
+    { label: 'Home', value: '/', icon: <Home /> },
+    { label: 'Employees', value: 'employees', icon: <PeopleOutline /> },
+    {
+      label: 'Organization',
+      value: 'organization',
+      icon: <CorporateFareOutlined />,
+    },
+    { label: 'Customers', value: 'customers', icon: <GroupOutlined /> },
+    { label: 'Products', value: 'products', icon: <ShoppingBasketOutlined /> },
+    { label: 'Estimates', value: 'estimates', icon: <ArticleOutlined /> },
+    {
+      label: 'Sales Orders',
+      value: 'sales-orders',
+      icon: <Inventory2Outlined />,
+    },
+    { label: 'Invoices', value: 'invoices', icon: <RequestPageOutlined /> },
   ],
 };
 
@@ -75,12 +97,17 @@ export default function Sidebar() {
     >
       <List>
         {NAVIGATION[user.user.role].map(
-          (text: { value: string; label: string }, index: number) => (
+          (
+            text: {
+              value: string;
+              label: string;
+              icon: React.Component;
+            },
+            index: number
+          ) => (
             <ListItem key={text.value} disablePadding>
               <ListItemButton onClick={() => router.push(text.value)}>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
+                <ListItemIcon>{text.icon}</ListItemIcon>
                 <ListItemText primary={text.label} />
               </ListItemButton>
             </ListItem>

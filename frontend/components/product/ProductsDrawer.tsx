@@ -20,6 +20,7 @@ function ProductsDrawer(props: any) {
       setOpen={setOpen}
       setValues={setValues}
       setIsEdit={setIsEdit}
+      values={[{ name: '', sku: '', gst: '', price: '', hsn: '', stock: 1 }]}
     >
       <Box m={2} display={'flex'} flexDirection={'column'} gap={'16px'}>
         <TextField
@@ -71,6 +72,16 @@ function ProductsDrawer(props: any) {
           label='GST'
           type='text'
           id='gst'
+        />
+        <TextField
+          style={{ width: '240px' }}
+          onChange={(e: any) => onChange('stock', e)}
+          required
+          fullWidth
+          value={values.stock}
+          label='Stock Count'
+          type='text'
+          id='stock'
         />
       </Box>
     </Drawer>

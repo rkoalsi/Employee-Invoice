@@ -8,14 +8,14 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { DeleteForever, Edit } from '@mui/icons-material';
 
-export default function ProductTable(props: any) {
+export default function EstimatesTable(props: any) {
   const { columns, rows, setOpen, setValues, setIsEdit, deleteData } = props;
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label='simple table'>
         <TableHead>
           <TableRow>
-            {columns.map((c: string) => (
+            {columns.map((c: string, i: Number) => (
               <TableCell key={c}>{c}</TableCell>
             ))}
           </TableRow>
@@ -23,17 +23,20 @@ export default function ProductTable(props: any) {
         <TableBody>
           {rows.map((row: any) => (
             <TableRow
-              key={row.name}
+              key={`${row.customer}${row.created_at} `}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component='th' scope='row'>
-                {row.name}
+                {row.customer.name}
               </TableCell>
-              <TableCell>{row.sku}</TableCell>
-              <TableCell>{row.hsn}</TableCell>
-              <TableCell>{row.gst}</TableCell>
-              <TableCell>{row.price}</TableCell>
-              <TableCell>{row.stock}</TableCell>
+              {row.products.map((p: any) => (
+                <TableRow>
+                  <TableCell>{p.product.name}</TableCell>
+                  <TableCell>{p.amount}</TableCell>
+                </TableRow>
+              ))}
+
+              <TableCell>{new Date(row.created_at).toTimeString()}</TableCell>
               <TableCell>
                 <DeleteForever onClick={() => deleteData(row._id)} />
               </TableCell>

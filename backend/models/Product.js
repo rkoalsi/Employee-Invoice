@@ -8,8 +8,13 @@ const ProductSchema = new Schema(
     hsn: { type: String, required: true },
     price: { type: String, required: true },
     gst: { type: String, required: true },
-    organizationId: { type: Schema.Types.ObjectId, required: true },
-    createdBy: { type: Schema.Types.ObjectId, required: true },
+    stock: { type: Number, required: true, default: 1 },
+    organizationId: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'organizations',
+    },
+    createdBy: { type: Schema.Types.ObjectId, required: true, ref: 'users' },
   },
   {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
