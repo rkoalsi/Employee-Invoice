@@ -22,14 +22,15 @@ function Estimates(props: Props) {
   const [open, setOpen] = React.useState<boolean>(false);
   const [isEdit, setIsEdit] = React.useState<boolean>(false);
   const [show, setShow] = React.useState<boolean>(false);
-  const [products, setProducts] = React.useState<{}[]>();
-  const [total, setTotal] = React.useState<Number>(0);
+  const [products, setProducts] = React.useState<any[]>([{}]);
   const [values, setValues] = React.useState<{
     customer: string;
-    products: { product: string; amount: number }[];
+    products: { product: string | { price: number }; amount: number }[];
+    total: number;
   }>({
     customer: '',
     products: [],
+    total: 0,
   });
   const onChange = (str: string, e: any, index: number) => {
     switch (str) {
@@ -50,6 +51,30 @@ function Estimates(props: Props) {
         break;
     }
   };
+  const reEval = () => {
+    const w = [...values.products];
+    const total = w
+      .map((p: any) => {
+        if (p.product && !isNaN(p.product.price)) {
+          return p.product.price * p.amount;
+        } else {
+          const index = products.findIndex(function (pr: any) {
+            return pr._id == p.product;
+          });
+          if (products[index]?.price && p.amount > 0) {
+            return products[index].price * p.amount;
+          } else {
+            return 0;
+          }
+        }
+      })
+      .reduce((x, y) => x + y, 0);
+    setValues({ ...values, total });
+  };
+  React.useEffect(() => {
+    reEval();
+  }, [show, onChange]);
+
   const getData = async () => {
     try {
       const c = await getCustomers(user.user.organizationId);
@@ -86,7 +111,10 @@ function Estimates(props: Props) {
     };
     try {
       const res = await createEstimate(v);
-      console.log(res.data);
+      if (res.status == 200) {
+        setMessage('Successfully Created Estimate');
+        setShow(true);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -133,7 +161,6 @@ function Estimates(props: Props) {
         isEdit={isEdit}
         setValues={setValues}
         values={values}
-        total={total}
       />
       <EstimatesTable
         columns={[

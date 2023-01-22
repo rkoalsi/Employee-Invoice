@@ -13,7 +13,7 @@ async function getProducts(req, res) {
 
 async function getProduct(req, res) {
   try {
-    const prd = await Product.findById(req.body.id);
+    const prd = await Product.findById(req.query.id);
     res.send(prd);
   } catch (error) {
     res.send(error);

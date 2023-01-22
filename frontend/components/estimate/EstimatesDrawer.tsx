@@ -2,10 +2,10 @@ import React from 'react';
 import Drawer from '../common/Drawer';
 import { TextField, Box, Divider, Button } from '@mui/material';
 import DropDown from '../common/DropDown';
+import { DeleteForeverOutlined } from '@mui/icons-material';
 
 function EstimatesDrawer(props: any) {
   const {
-    total,
     onChange,
     values,
     open,
@@ -22,6 +22,11 @@ function EstimatesDrawer(props: any) {
   };
   const onClickAdd = () => {
     setValues({ ...values, products: [...values.products, {}] });
+  };
+  const deleteRow = (i: number) => {
+    var w = [...values.products];
+    w.splice(i, 1);
+    setValues({ ...values, products: w });
   };
   const nums = Array.from(Array(11).keys());
   var numbers: {}[] = [];
@@ -66,12 +71,13 @@ function EstimatesDrawer(props: any) {
               onChangeIndex={i}
               value={values?.products[i]?.amount}
             />
+            <DeleteForeverOutlined onClick={() => deleteRow(i)} />
           </Box>
         ))}
         <Button onClick={onClickAdd}>Add More Products</Button>
         <Divider />
         <TextField
-          value={total}
+          value={values.total}
           disabled
           fullWidth
           label='Amount'
