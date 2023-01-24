@@ -1,5 +1,5 @@
-import { array, number, object, string } from 'yup';
-
+import { number, object, string } from 'yup';
+import * as yup from 'yup';
 export const SIGNUP_VERIFICATION_SCHEMA = object({
   name: string().required('Email is required'),
   organizationId: string().required('Organization Id is required'),
@@ -20,8 +20,34 @@ export const EMPLOYEE_VERIFICATION_SCHEMA = object({
 });
 
 export const ESTIMATE_VERIFICATION_SCHEMA = object({
-  customer: string().required('Number of customers is required'),
-  products: array().required('Number of products is required'),
+  customer: yup.lazy((value) => {
+    switch (typeof value) {
+      case 'object':
+        return yup.object().required(); // schema for object
+      case 'string':
+        return yup.string().min(5).required('Number of customers is required'); // schema for string
+      default:
+        return yup.mixed(); // here you can decide what is the default
+    }
+  }),
+  products: yup
+    .array(
+      yup.object({
+        product: yup.lazy((value) => {
+          switch (typeof value) {
+            case 'object':
+              return yup.object().required(); // schema for object
+            case 'string':
+              return yup.string().required(); // schema for string
+            default:
+              return yup.mixed(); // here you can decide what is the default
+          }
+        }),
+        amount: yup.number().required(),
+      })
+    )
+    .min(1)
+    .required(),
   total: number().required(),
 });
 export const CUSTOMER_VERIFICATION_SCHEMA = object({

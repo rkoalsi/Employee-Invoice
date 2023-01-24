@@ -21,6 +21,7 @@ function Estimates(props: Props) {
   const [estimates, setEstimates] = React.useState<{}[]>([]);
   const [message, setMessage] = React.useState<string>('');
   const [open, setOpen] = React.useState<boolean>(false);
+  const [checker, setChecker] = React.useState<boolean>(false);
   const [isEdit, setIsEdit] = React.useState<boolean>(false);
   const [show, setShow] = React.useState<boolean>(false);
   const [products, setProducts] = React.useState<any[]>([{}]);
@@ -33,7 +34,9 @@ function Estimates(props: Props) {
     products: [],
     total: 0,
   });
+
   const onChange = (str: string, e: any, index: number) => {
+    setChecker(!checker);
     switch (str) {
       case 'customer':
         setValues({ ...values, customer: e });
@@ -52,7 +55,7 @@ function Estimates(props: Props) {
         break;
     }
   };
-  const reEval = () => {
+  React.useEffect(() => {
     const w = [...values.products];
     const total = w
       .map((p: any) => {
@@ -71,10 +74,7 @@ function Estimates(props: Props) {
       })
       .reduce((x, y) => x + y, 0);
     setValues({ ...values, total });
-  };
-  React.useEffect(() => {
-    reEval();
-  }, [show, onChange]);
+  }, [open, checker]);
 
   const getData = async () => {
     try {
@@ -89,58 +89,63 @@ function Estimates(props: Props) {
     }
   };
   const updateData = async () => {
-    // try {
-      // const check = await ESTIMATE_VERIFICATION_SCHEMA.validate(values);
-    // if (check){
-      try {
+    try {
+      const check = await ESTIMATE_VERIFICATION_SCHEMA.validate(values, {
+        abortEarly: false,
+      });
+      if (check) {
         const d = {
           ...values,
           organizationId: user.user.organizationId,
           updatedBy: user.user._id,
         };
-        
+
         const data = await updateEstimate(d);
         if (data.status == 200) {
           setMessage(data.data);
           setShow(true);
         }
-      } catch (error) {
+      }
+    } catch (error: any) {
+      if (error.inner) {
+        error.inner.forEach((e: any) => {
+          setMessage(e.message);
+          setShow(true);
+        });
+      } else {
         console.log(error);
       }
     }
-    // } catch (error:any) {
-      // error.inner.forEach((e: any) => {
-        // setMessage(e.message);
-        // setShow(true);
-      // });
-    // }
-    
+  };
   const createData = async () => {
-    // try {
-    //   const check = await ESTIMATE_VERIFICATION_SCHEMA.validate(values);
-    //   if(check){
+    try {
+      const check = await ESTIMATE_VERIFICATION_SCHEMA.validate(values, {
+        abortEarly: false,
+      });
+      if (check) {
         var v = {
           ...values,
           organizationId: user.user.organizationId,
           createdBy: user.user._id,
         };
-        try {
-          const res = await createEstimate(v);
-          if (res.status == 200) {
-            setMessage('Successfully Created Estimate');
-            setShow(true);
-          }
-        } catch (error) {
-          console.log(error);
+        console.log(v);
+        const res = await createEstimate(v);
+        if (res.status == 200) {
+          setMessage('Successfully Created Estimate');
+          setShow(true);
         }
       }
-    // }catch (error:any) {
-    //   error.inner.forEach((e: any) => {
-    //     setMessage(e.message);
-    //   });
-    // }
-
-  // };
+    } catch (error: any) {
+      if (error.inner) {
+        error.inner.forEach((e: any) => {
+          setMessage(e.message);
+          setShow(true);
+        });
+      } else {
+        console.log(error.message);
+      }
+    }
+  };
   const deleteData = async (r: string) => {
     try {
       const res = await deleteEstimate(r);
@@ -154,7 +159,7 @@ function Estimates(props: Props) {
   };
   React.useEffect(() => {
     getData();
-  }, [user, show, open]);
+  }, [user, show]);
   return (
     <Box
       component='span'

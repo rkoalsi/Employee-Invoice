@@ -9,7 +9,7 @@ import ListItemText from '@mui/material/ListItemText';
 import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import styled from 'styled-components';
-import { useRouter } from 'next/router';
+import Router from 'next/router';
 import { useUserContext } from '../../context/user';
 import { Button } from '@mui/material';
 import {
@@ -26,46 +26,45 @@ import {
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
-const NAVIGATION = {
+const NAVIGATION: {} = {
   customer: [{ label: 'Home', value: '/', icon: <Home /> }],
   employee: [
     { label: 'Home', value: '/', icon: <Home /> },
-    { label: 'Customers', value: 'customers', icon: <GroupOutlined /> },
-    { label: 'Products', value: 'products', icon: <ShoppingBasketOutlined /> },
-    { label: 'Estimates', value: 'estimates', icon: <ArticleOutlined /> },
+    { label: 'Customers', value: '/customers', icon: <GroupOutlined /> },
+    { label: 'Products', value: '/products', icon: <ShoppingBasketOutlined /> },
+    { label: 'Estimates', value: '/estimates', icon: <ArticleOutlined /> },
     {
       label: 'Sales Orders',
-      value: 'sales-orders',
+      value: '/sales-orders',
       icon: <Inventory2Outlined />,
     },
-    { label: 'Invoices', value: 'invoices', icon: <RequestPageOutlined /> },
+    { label: 'Invoices', value: '/invoices', icon: <RequestPageOutlined /> },
   ],
   admin: [
     { label: 'Home', value: '/', icon: <Home /> },
-    { label: 'Employees', value: 'employees', icon: <PeopleOutline /> },
+    { label: 'Employees', value: '/employees', icon: <PeopleOutline /> },
     {
       label: 'Organization',
-      value: 'organization',
+      value: '/organization',
       icon: <CorporateFareOutlined />,
     },
-    { label: 'Customers', value: 'customers', icon: <GroupOutlined /> },
-    { label: 'Products', value: 'products', icon: <ShoppingBasketOutlined /> },
-    { label: 'Estimates', value: 'estimates', icon: <ArticleOutlined /> },
+    { label: 'Customers', value: '/customers', icon: <GroupOutlined /> },
+    { label: 'Products', value: '/products', icon: <ShoppingBasketOutlined /> },
+    { label: 'Estimates', value: '/estimates', icon: <ArticleOutlined /> },
     {
       label: 'Sales Orders',
-      value: 'sales-orders',
+      value: '/sales-orders',
       icon: <Inventory2Outlined />,
     },
-    { label: 'Invoices', value: 'invoices', icon: <RequestPageOutlined /> },
+    { label: 'Invoices', value: '/invoices', icon: <RequestPageOutlined /> },
   ],
 };
 
 export default function Sidebar() {
   const [user, setUser] = useUserContext();
-  const router = useRouter();
   const onClickSignOut = () => {
     setUser({});
-    router.push('/login');
+    Router.push('/login');
   };
   const [state, setState] = React.useState({
     top: false,
@@ -101,12 +100,12 @@ export default function Sidebar() {
             text: {
               value: string;
               label: string;
-              icon: React.Component;
+              icon: React.ReactNode;
             },
             index: number
           ) => (
             <ListItem key={text.value} disablePadding>
-              <ListItemButton onClick={() => router.push(text.value)}>
+              <ListItemButton onClick={() => Router.push(text.value)}>
                 <ListItemIcon>{text.icon}</ListItemIcon>
                 <ListItemText primary={text.label} />
               </ListItemButton>

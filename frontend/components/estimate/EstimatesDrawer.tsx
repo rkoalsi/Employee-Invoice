@@ -54,7 +54,12 @@ function EstimatesDrawer(props: any) {
           onChangeTitle={'customer'}
         />
         {values.products.map((_: any, i: number) => (
-          <Box display={'flex'} flexDirection={'row'} gap={'16px'}>
+          <Box
+            display={'flex'}
+            flexDirection={'row'}
+            gap={'16px'}
+            alignItems={'center'}
+          >
             <DropDown
               value={values?.products[i]?.product?._id}
               items={products}
