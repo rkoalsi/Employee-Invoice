@@ -1,4 +1,5 @@
 const Product = require('@models/Product');
+const Estimate = require('../models/Estimate');
 
 async function getProducts(req, res) {
   try {
@@ -37,8 +38,13 @@ async function updateProduct(req, res) {
 }
 async function deleteProduct(req, res) {
   try {
-    const product = await Product.deleteOne({ _id: req.query.id });
-    res.send(`${product.deletedCount} Item Successfully Deleted`);
+    const estimate = await Estimate.find({ 'products.product': req.query.id });
+    if (estimate.length > 0) {
+      res.send(`Product Exists in an Estimate`);
+    } else {
+      const product = await Product.deleteOne({ _id: req.query.id });
+      res.send(`${product.deletedCount} Item Successfully Deleted`);
+    }
   } catch (error) {
     res.send(error);
   }

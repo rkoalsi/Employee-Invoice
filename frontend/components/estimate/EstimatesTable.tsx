@@ -36,6 +36,9 @@ export default function EstimatesTable(props: any) {
                 </TableRow>
               ))}
 
+              <TableCell component='th' scope='row'>
+                INR {row.total}
+              </TableCell>
               <TableCell>{new Date(row.created_at).toTimeString()}</TableCell>
               <TableCell>
                 <DeleteForever onClick={() => deleteData(row._id)} />

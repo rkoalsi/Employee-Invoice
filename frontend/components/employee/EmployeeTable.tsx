@@ -8,9 +8,12 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { DeleteForever, Edit } from '@mui/icons-material';
 import { deleteCustomer } from '../../api/customer';
+import { deleteEmployee } from '../../api/employee';
 
 export default function EmployeeTable(props: any) {
-  const { columns, rows, setOpen, setValues, setIsEdit } = props;
+  const { columns, rows, setOpen, onClickDelete, setValues, setIsEdit, user } =
+    props;
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label='simple table'>
@@ -30,23 +33,26 @@ export default function EmployeeTable(props: any) {
               <TableCell component='th' scope='row'>
                 {row.name}
               </TableCell>
-              <TableCell>{row.role}</TableCell>
+              <TableCell>
+                {row.role.charAt(0).toUpperCase() + row.role.slice(1)}
+              </TableCell>
               <TableCell>{row.email}</TableCell>
-              {/* <TableCell>{row.phone}</TableCell> */}
-              <TableCell>
-                <DeleteForever
-                  onClick={async () => await deleteCustomer(row._id)}
-                />
-              </TableCell>
-              <TableCell>
-                <Edit
-                  onClick={() => {
-                    setOpen(true);
-                    setIsEdit(true);
-                    setValues(row);
-                  }}
-                />
-              </TableCell>
+              {user.user._id !== row._id && (
+                <>
+                  <TableCell>
+                    <DeleteForever onClick={() => onClickDelete(row._id)} />
+                  </TableCell>
+                  <TableCell>
+                    <Edit
+                      onClick={() => {
+                        setOpen(true);
+                        setIsEdit(true);
+                        setValues(row);
+                      }}
+                    />
+                  </TableCell>
+                </>
+              )}
             </TableRow>
           ))}
         </TableBody>

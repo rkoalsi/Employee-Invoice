@@ -82,7 +82,7 @@ function EstimatesDrawer(props: any) {
         <Button onClick={onClickAdd}>Add More Products</Button>
         <Divider />
         <TextField
-          value={values.total}
+          value={`INR ${values.total}`}
           disabled
           fullWidth
           label='Amount'

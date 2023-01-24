@@ -22,6 +22,7 @@ function EmployeesDrawer(props: any) {
       setOpen={setOpen}
       setIsEdit={setIsEdit}
       setValues={setValues}
+      onClickCancel={() => setValues({ name: '', role: '', email: '' })}
       values={{ name: '', role: '', email: '' }}
     >
       <Box m={2} display={'flex'} flexDirection={'column'} gap={'16px'}>

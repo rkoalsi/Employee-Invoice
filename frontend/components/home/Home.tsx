@@ -16,6 +16,7 @@ import {
   RequestPageOutlined,
   ShoppingBasketOutlined,
 } from '@mui/icons-material';
+import { getEmployees } from '../../api/employee';
 interface Props {}
 
 function Home(props: Props) {
@@ -37,6 +38,7 @@ function Home(props: Props) {
         getEstimates(user.user.organizationId),
         getSalesOrders(user.user.organizationId),
         getInvoices(user.user.organizationId),
+        getEmployees(user.user.organizationId),
       ]);
       setData([
         res[0].data,
@@ -44,6 +46,8 @@ function Home(props: Props) {
         res[2].data,
         res[3].data,
         res[4].data,
+        res[5].data.filter((e: any) => e.role === 'employee'),
+        res[5].data.filter((e: any) => e.role === 'admin'),
       ]);
     } catch (err) {
       console.log(err);
@@ -86,6 +90,24 @@ function Home(props: Props) {
               onClick={() => router.push('/customers')}
             />
           </Grid>
+          {user.user.role === 'admin' && (
+            <>
+              <Grid item>
+                <DashCard
+                  icon={<GroupOutlined />}
+                  text={`Total Employees: ${data[5]?.length}`}
+                  onClick={() => router.push('/employees')}
+                />
+              </Grid>
+              <Grid item>
+                <DashCard
+                  icon={<GroupOutlined />}
+                  text={`Total Admins: ${data[6]?.length}`}
+                  onClick={() => router.push('/employees')}
+                />
+              </Grid>
+            </>
+          )}
           <Grid item>
             <DashCard
               icon={<ShoppingBasketOutlined />}

@@ -4,6 +4,7 @@ import { Box, TextField } from '@mui/material';
 
 function ProductsDrawer(props: any) {
   const {
+    onClickCancel,
     onChange,
     values,
     onClickSubmit = () => {},
@@ -14,6 +15,7 @@ function ProductsDrawer(props: any) {
   } = props;
   return (
     <Drawer
+      onClickCancel={onClickCancel}
       buttonText={'+ Add Product'}
       onClickSubmit={onClickSubmit}
       open={open}

@@ -20,7 +20,12 @@ const EstimateSchema = new Schema(
       required: true,
       ref: 'organizations',
     },
+    total: {
+      type: Schema.Types.Number,
+      required: true,
+    },
   },
+
   {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
   }

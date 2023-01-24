@@ -43,7 +43,7 @@ function Login(props: Props) {
           } else {
             setError({ status: 'success', message: 'Successfully Logged In' });
             setUser(w.data);
-            Router.push('/');
+            Router.push('/dashboard');
           }
         } catch (error: any) {
           if (error && error.response && error.response.status == 400) {

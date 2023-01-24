@@ -16,7 +16,7 @@ export const SIGNIN_VERIFICATION_SCHEMA = object({
 export const EMPLOYEE_VERIFICATION_SCHEMA = object({
   email: string().email().required('Email is required'),
   role: string().required('Role is required'),
-  password: string().required('Password is required'),
+  name: string().required('Name is required'),
 });
 
 export const ESTIMATE_VERIFICATION_SCHEMA = object({

@@ -193,6 +193,7 @@ function Estimates(props: Props) {
         columns={[
           'Customer',
           'Products - Amount',
+          'Total',
           'Created At',
           'Delete',
           'Edit',

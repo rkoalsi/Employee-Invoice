@@ -1,12 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const {
-  getUser,
-  getUsers,
-  updateUser,
-  deleteUser,
-  getUserByOrg,
-} = require('./user');
+const { getUser, getUsers, updateUser, deleteUser } = require('./user');
 const {
   getEstimates,
   getEstimate,
@@ -50,6 +44,13 @@ const {
   deleteOrganization,
 } = require('./organization');
 const { register, login, resetPassword, home } = require('./auth');
+const {
+  getEmployees,
+  deleteEmployee,
+  updateEmployee,
+  getEmployee,
+  createEmployee,
+} = require('./employee');
 
 /* GET home page. */
 router.get('/', home);
@@ -74,14 +75,27 @@ router.get('/users', getUsers);
 /* GET User */
 router.get('/user', getUser);
 
-/* GET User By OrganizationId */
-router.get('/userOrg', getUserByOrg);
-
 /* UPDATE User */
 router.patch('/user', updateUser);
 
 /* DELETE User */
 router.delete('/user', deleteUser);
+
+//EMPLOYEES
+/* GET Employees By OrganizationId */
+router.get('/employees', getEmployees);
+
+/* GET Employee */
+router.get('/employee', getEmployee);
+
+/* POST Employee */
+router.post('/employee', createEmployee);
+
+/* UPDATE Employee */
+router.patch('/employee', updateEmployee);
+
+/* DELETE Employee */
+router.delete('/employee', deleteEmployee);
 
 // ESTIMATES
 /* GET Estimates */

@@ -56,6 +56,9 @@ function Products(props: Props) {
       console.log(error);
     }
   };
+  const onClickCancel = () => {
+    setValues({ name: '', sku: '', gst: '', price: '', hsn: '', stock: 1 });
+  };
 
   const deleteData = async (r: string) => {
     try {
@@ -126,6 +129,7 @@ function Products(props: Props) {
       />
       Total Number of Products: {data.length}
       <ProductsDrawer
+        onClickCancel={onClickCancel}
         onChange={onChange}
         values={values}
         onClickSubmit={!isEdit ? createData : updateData}
