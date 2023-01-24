@@ -6,7 +6,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import styled from 'styled-components';
 import Router from 'next/router';
@@ -19,7 +18,6 @@ import {
   Home,
   Inventory2Outlined,
   PeopleOutline,
-  Person2Outlined,
   RequestPageOutlined,
   ShoppingBasketOutlined,
 } from '@mui/icons-material';
@@ -27,9 +25,9 @@ import {
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
 const NAVIGATION: {} = {
-  customer: [{ label: 'Home', value: '/', icon: <Home /> }],
+  customer: [{ label: 'Home', value: '/dashboard', icon: <Home /> }],
   employee: [
-    { label: 'Home', value: '/', icon: <Home /> },
+    { label: 'Home', value: '/dashboard', icon: <Home /> },
     { label: 'Customers', value: '/customers', icon: <GroupOutlined /> },
     { label: 'Products', value: '/products', icon: <ShoppingBasketOutlined /> },
     { label: 'Estimates', value: '/estimates', icon: <ArticleOutlined /> },
@@ -41,7 +39,7 @@ const NAVIGATION: {} = {
     { label: 'Invoices', value: '/invoices', icon: <RequestPageOutlined /> },
   ],
   admin: [
-    { label: 'Home', value: '/', icon: <Home /> },
+    { label: 'Home', value: '/dashboard', icon: <Home /> },
     { label: 'Employees', value: '/employees', icon: <PeopleOutline /> },
     {
       label: 'Organization',
@@ -119,7 +117,20 @@ export default function Sidebar() {
   return (
     <Container>
       <React.Fragment key={'left'}>
-        <MenuIcon onClick={toggleDrawer('left', true)} />
+        <MenuIcon
+          onClick={toggleDrawer('left', true)}
+          sx={{
+            animation: 'spin 3s linear infinite',
+            '@keyframes spin': {
+              '0%': {
+                transform: 'left(-100)',
+              },
+              '100%': {
+                transform: 'rotate(0deg)',
+              },
+            },
+          }}
+        />
         <Drawer
           anchor={'left'}
           open={state['left']}
