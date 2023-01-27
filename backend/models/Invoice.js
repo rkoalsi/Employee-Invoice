@@ -3,10 +3,28 @@ const { Schema } = mongoose;
 
 const InvoiceSchema = new Schema(
   {
-    createdBy: Schema.Types.ObjectId,
-    to: Schema.Types.ObjectId,
     orderDate: { type: Date, default: new Date() },
-    organizationId: { type: Schema.Types.ObjectId, required: true },
+    createdBy: { type: Schema.Types.ObjectId, required: true, ref: 'users' },
+    customer: { type: Schema.Types.ObjectId, required: true, ref: 'customers' },
+    products: [
+      {
+        product: {
+          type: Schema.Types.ObjectId,
+          required: true,
+          ref: 'products',
+        },
+        amount: { type: Number, required: true },
+      },
+    ],
+    organizationId: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'organizations',
+    },
+    total: {
+      type: Schema.Types.Number,
+      required: true,
+    },
   },
   {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },

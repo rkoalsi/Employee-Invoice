@@ -9,8 +9,8 @@ export const getInvoices = (query: string) =>
 
 export const getInvoice = (body: any) => axios.get(`${base}/invoice`, body);
 
-export const deleteInvoice = (body: any) =>
-  axios.delete(`${base}/invoice`, body);
+export const deleteInvoice = (query: string) =>
+  axios.delete(`${base}/invoice?id=${query}`);
 
 export const updateInvoice = (body: any) =>
   axios.patch(`${base}/invoice`, body);

@@ -11,8 +11,8 @@ export const getSalesOrders = (query: string) =>
 export const getSalesOrder = (body: any) =>
   axios.get(`${base}/sales-order`, body);
 
-export const deleteSalesOrder = (body: any) =>
-  axios.delete(`${base}/sales-order`, body);
+export const deleteSalesOrder = (query: string) =>
+  axios.delete(`${base}/sales-order?id=${query}`);
 
 export const updateSalesOrder = (body: any) =>
   axios.patch(`${base}/sales-order`, body);

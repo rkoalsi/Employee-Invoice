@@ -48,7 +48,7 @@ function Register(props: Props) {
           } else {
             setError({ status: 'success', message: 'Successfully Logged In' });
             setUser(w.data);
-            Router.push('/');
+            Router.push('/dashboard');
           }
         } catch (error: any) {
           console.log(error.response.data);
@@ -164,6 +164,7 @@ function Register(props: Props) {
           <Button
             onClick={onClickRegister}
             fullWidth
+            id={'register'}
             variant='contained'
             sx={{ mt: 3, mb: 2 }}
           >

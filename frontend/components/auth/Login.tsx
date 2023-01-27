@@ -121,6 +121,7 @@ function Login(props: Props) {
               label='Remember me'
             />
             <Button
+              id='sign-in'
               fullWidth
               variant='contained'
               sx={{ mt: 3, mb: 2 }}

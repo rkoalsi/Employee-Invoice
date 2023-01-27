@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { DeleteForever, Edit } from '@mui/icons-material';
 
-export default function SalesOrdersTable(props: any) {
+export default function InvoiceTable(props: any) {
   const { columns, rows, setOpen, setValues, setIsEdit, deleteData } = props;
   return (
     <TableContainer component={Paper}>
