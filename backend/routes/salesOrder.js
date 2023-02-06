@@ -1,4 +1,5 @@
 const SalesOrder = require('@models/SalesOrder');
+const Product = require('@models/Product');
 async function getSalesOrders(req, res) {
   try {
     const so = await SalesOrder.find({
@@ -19,9 +20,19 @@ async function getSalesOrder(req, res) {
     res.send(error);
   }
 }
+//Added stock updation functionality
 async function createSalesOrder(req, res) {
+  const { products } = req.body;
   try {
     const so = await SalesOrder.create(req.body);
+    const productIds = products.map((p) => p.product);
+    productIds.map(async (p, i) => {
+      const product = await Product.findOne({ _id: p });
+      await Product.updateOne(
+        { _id: p },
+        { stock: product.stock - products[i].amount }
+      );
+    });
     res.send(so);
   } catch (error) {
     res.send(error);

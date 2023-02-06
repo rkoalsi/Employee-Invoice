@@ -37,7 +37,7 @@ export default function EmployeeTable(props: any) {
                 {row.role.charAt(0).toUpperCase() + row.role.slice(1)}
               </TableCell>
               <TableCell>{row.email}</TableCell>
-              {user.user._id !== row._id && (
+              {user?.user?._id !== row._id && (
                 <>
                   <TableCell>
                     <DeleteForever onClick={() => onClickDelete(row._id)} />
