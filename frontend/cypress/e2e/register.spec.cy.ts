@@ -1,8 +1,8 @@
 describe('register spec', () => {
   it('registration', async () => {
-    cy.visit('http://localhost:3001/register');
+    cy.visit('http://localhost:3000/register');
     cy.get('#name').type('World Hello2');
-    cy.get('#email').type('hello22@gmail.com');
+    cy.get('#email').type('hello212@gmail.com');
     cy.get('#password').type('hello12');
     cy.get('#organizationId').type('63959159154d611a212daf0f');
     cy.get('#demo-select-small')

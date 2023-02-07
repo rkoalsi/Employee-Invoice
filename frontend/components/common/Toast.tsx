@@ -12,7 +12,7 @@ function Toast(props: Props) {
 
   return (
     <>
-      {error.status && (
+      {error.status && error.status !== 'success' && (
         <Collapse in={open}>
           <Alert
             severity='error'

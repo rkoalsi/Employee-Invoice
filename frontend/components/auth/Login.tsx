@@ -36,27 +36,24 @@ function Login(props: Props) {
         abortEarly: false,
       });
       if (check) {
-        try {
-          const w = await login(data);
-          if (w.data.errors) {
-            setError({ status: true, message: w.data.message });
-          } else {
-            setError({ status: 'success', message: 'Successfully Logged In' });
-            setUser(w.data);
-            Router.push('/dashboard');
-          }
-        } catch (error: any) {
-          if (error && error.response && error.response.status == 400) {
-            setError({ status: true, message: error.response.data });
-          } else {
-            setError({ status: true, message: error.message });
-          }
+        const w = await login(data);
+        if (!w.data.errors) {
+          setError({ status: 'success', message: 'Successfully Logged In' });
+          setUser(w.data);
+          Router.push('/dashboard');
         }
       }
-    } catch (err: any) {
-      err.inner.forEach((e: any) => {
-        setError({ status: true, message: e.message });
-      });
+    } catch (error: any) {
+      if (error.inner) {
+        error.inner.forEach((e: any) => {
+          setError({ status: true, message: e.message });
+        });
+      }
+      if (error && error.response && error.response.status == 400) {
+        setError({ status: true, message: error.response.data });
+      } else {
+        setError({ status: true, message: error.message });
+      }
     }
   };
 

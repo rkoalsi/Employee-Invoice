@@ -12,6 +12,7 @@ export default function DropDown(props: any) {
     onChangeTitle = 'description',
     onChangeIndex = null,
     value = '',
+    id = 'demo-select-small2',
   } = props;
   const [val, setVal] = React.useState(value);
   const handleChange = (event: SelectChangeEvent) => {
@@ -27,12 +28,12 @@ export default function DropDown(props: any) {
       <InputLabel id='demo-select-small'>{label}</InputLabel>
       <Select
         labelId='demo-select-small'
-        id='demo-select-small'
+        id={id}
         value={val}
         label={label}
         onChange={(e) => handleChange(e)}
       >
-        {items.map((i: any) => (
+        {items?.map((i: any) => (
           <MenuItem key={i.value || i._id} value={i.value || i._id}>
             {i.name}
           </MenuItem>

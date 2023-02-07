@@ -11,9 +11,11 @@ function CustomersDrawer(props: any) {
     setOpen,
     setValues,
     setIsEdit,
+    onClickCancel,
   } = props;
   return (
     <Drawer
+      onClickCancel={onClickCancel}
       buttonText={'+ Add Customer'}
       onClickSubmit={onClickSubmit}
       open={open}

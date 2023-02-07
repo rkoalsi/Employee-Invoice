@@ -67,6 +67,7 @@ function EstimatesDrawer(props: any) {
               onChange={onChange}
               onChangeTitle={'products'}
               onChangeIndex={i}
+              id={'product'}
             />
             <DropDown
               items={numbers}
@@ -75,6 +76,7 @@ function EstimatesDrawer(props: any) {
               onChangeTitle={'amount'}
               onChangeIndex={i}
               value={values?.products[i]?.amount}
+              id={'amount'}
             />
             <DeleteForeverOutlined onClick={() => deleteRow(i)} />
           </Box>

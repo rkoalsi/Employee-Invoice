@@ -12,7 +12,11 @@ export default function ProductTable(props: any) {
   const { columns, rows, setOpen, setValues, setIsEdit, deleteData } = props;
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+      <Table
+        sx={{ minWidth: 650 }}
+        aria-label='simple table'
+        id={'product-table'}
+      >
         <TableHead>
           <TableRow>
             {columns.map((c: string) => (
@@ -35,10 +39,14 @@ export default function ProductTable(props: any) {
               <TableCell>{row.price}</TableCell>
               <TableCell>{row.stock}</TableCell>
               <TableCell>
-                <DeleteForever onClick={() => deleteData(row._id)} />
+                <DeleteForever
+                  onClick={() => deleteData(row._id)}
+                  id={'delete-product'}
+                />
               </TableCell>
               <TableCell>
                 <Edit
+                  id={'edit-product'}
                   onClick={() => {
                     setOpen(true);
                     setIsEdit(true);

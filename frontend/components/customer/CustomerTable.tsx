@@ -10,10 +10,14 @@ import { DeleteForever, Edit } from '@mui/icons-material';
 import { deleteCustomer } from '../../api/customer';
 
 export default function CustomerTable(props: any) {
-  const { columns, rows, setOpen, setValues, setIsEdit } = props;
+  const { columns, rows, setOpen, setValues, setIsEdit, deleteCustom } = props;
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+      <Table
+        sx={{ minWidth: 650 }}
+        id={'customer-table'}
+        aria-label='simple table'
+      >
         <TableHead>
           <TableRow>
             {columns.map((c: String) => (
@@ -35,11 +39,13 @@ export default function CustomerTable(props: any) {
               <TableCell>{row.phone}</TableCell>
               <TableCell>
                 <DeleteForever
-                  onClick={async () => await deleteCustomer(row._id)}
+                  onClick={() => deleteCustom(row._id)}
+                  id={'delete-customer'}
                 />
               </TableCell>
               <TableCell>
                 <Edit
+                  id={'edit-customer'}
                   onClick={() => {
                     setOpen(true);
                     setIsEdit(true);

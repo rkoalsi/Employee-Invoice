@@ -6,6 +6,7 @@ import {
   createCustomer,
   getCustomers,
   updateCustomer,
+  deleteCustomer,
 } from '../../api/customer';
 import CustomerTable from './CustomerTable';
 interface Props {}
@@ -35,6 +36,21 @@ function Customers(props: Props) {
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+  const onClickCancel = () => {
+    setValues({ name: '', shop: '', gstin: '', phone: '' });
+  };
+  const deleteCustom = async (r: string) => {
+    try {
+      const res = await deleteCustomer(r);
+      if (res.status == 200) {
+        setMessage(res.data);
+        setShow(true);
+      }
+    } catch (error: any) {
+      setMessage(error.message);
+      setShow(true);
     }
   };
   const updateData = async () => {
@@ -106,12 +122,14 @@ function Customers(props: Props) {
         open={open}
         setOpen={setOpen}
         setValues={setValues}
+        onClickCancel={onClickCancel}
         setIsEdit={setIsEdit}
       />
       <CustomerTable
         rows={data}
         columns={['Name', 'Shop', 'GSTIN', 'Phone', 'Delete', 'Edit']}
         open={open}
+        deleteCustom={deleteCustom}
         setOpen={setOpen}
         setValues={setValues}
         setIsEdit={setIsEdit}

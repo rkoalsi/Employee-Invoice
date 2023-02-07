@@ -12,7 +12,11 @@ export default function EstimatesTable(props: any) {
   const { columns, rows, setOpen, setValues, setIsEdit, deleteData } = props;
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+      <Table
+        sx={{ minWidth: 650 }}
+        aria-label='simple table'
+        id={'estimate-table'}
+      >
         <TableHead>
           <TableRow>
             {columns.map((c: string, i: Number) => (
@@ -41,10 +45,14 @@ export default function EstimatesTable(props: any) {
               </TableCell>
               <TableCell>{new Date(row.created_at).toTimeString()}</TableCell>
               <TableCell>
-                <DeleteForever onClick={() => deleteData(row._id)} />
+                <DeleteForever
+                  id={'delete-estimate'}
+                  onClick={() => deleteData(row._id)}
+                />
               </TableCell>
               <TableCell>
                 <Edit
+                  id={'edit-estimate'}
                   onClick={() => {
                     setOpen(true);
                     setIsEdit(true);
