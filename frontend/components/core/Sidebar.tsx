@@ -14,6 +14,7 @@ import { Button } from '@mui/material';
 import {
   ArticleOutlined,
   CorporateFareOutlined,
+  Dashboard,
   GroupOutlined,
   Home,
   Inventory2Outlined,
@@ -25,9 +26,10 @@ import {
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
 const NAVIGATION: {} = {
-  customer: [{ label: 'Home', value: '/dashboard', icon: <Home /> }],
+  customer: [{ label: 'Home', value: '/', icon: <Home /> }],
   employee: [
-    { label: 'Home', value: '/dashboard', icon: <Home /> },
+    { label: 'Home', value: '/', icon: <Home /> },
+    { label: 'Dashboard', value: '/dashboard', icon: <Dashboard /> },
     { label: 'Customers', value: '/customers', icon: <GroupOutlined /> },
     { label: 'Products', value: '/products', icon: <ShoppingBasketOutlined /> },
     { label: 'Estimates', value: '/estimates', icon: <ArticleOutlined /> },
@@ -39,7 +41,8 @@ const NAVIGATION: {} = {
     { label: 'Invoices', value: '/invoices', icon: <RequestPageOutlined /> },
   ],
   admin: [
-    { label: 'Home', value: '/dashboard', icon: <Home /> },
+    { label: 'Home', value: '/', icon: <Home /> },
+    { label: 'Dashboard', value: '/dashboard', icon: <Dashboard /> },
     { label: 'Employees', value: '/employees', icon: <PeopleOutline /> },
     {
       label: 'Organization',

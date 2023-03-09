@@ -116,13 +116,10 @@ var data = {
     // "template": fs.readFileSync('template.html', 'base64') // Must be base64 encoded html
   },
 };
-
-//  4.    Let's use the EasyInvoice library and call the "createInvoice" function
-easyinvoice.createInvoice(data, function (result) {
-  /*  
-        5.  The 'result' variable will contain our invoice as a base64 encoded PDF
-            Now let's save our invoice to our local filesystem so we can have a look!
-            We will be using the 'fs' library we imported above for this.
-    */
+const writeInvoice = (result) => {
   fs.writeFileSync('invoice.pdf', result.pdf, 'base64');
-});
+};
+const generateInvoice = (data) => {
+  easyinvoice.createInvoice(data, writeInvoice);
+};
+export default generateInvoice;

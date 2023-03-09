@@ -7,6 +7,9 @@ export const createProduct = (body: any) => axios.post(`${base}/product`, body);
 export const getProducts = (query: string) =>
   axios.get(`${base}/products?organizationId=${query}`);
 
+export const getProductsData = (query: string) =>
+  axios.get(`${base}/product-data?organizationId=${query}`);
+
 export const getProduct = (query: string) =>
   axios.get(`${base}/product?id=${query}`);
 

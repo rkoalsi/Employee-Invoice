@@ -7,7 +7,8 @@ export const createEstimate = (body: any) =>
 
 export const getEstimates = (query: string) =>
   axios.get(`${base}/estimates?organizationId=${query}`);
-
+export const getEstimatesData = (query: string) =>
+  axios.get(`${base}/estimate-data?organizationId=${query}`);
 export const getEstimate = (body: any) => axios.get(`${base}/estimate`, body);
 
 export const deleteEstimate = (query: string) =>

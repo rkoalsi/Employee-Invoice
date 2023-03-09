@@ -7,6 +7,9 @@ export const createInvoice = (body: any) => axios.post(`${base}/invoice`, body);
 export const getInvoices = (query: string) =>
   axios.get(`${base}/invoices?organizationId=${query}`);
 
+export const getInvoicesData = (query: string) =>
+  axios.get(`${base}/invoice-data?organizationId=${query}`);
+
 export const getInvoice = (body: any) => axios.get(`${base}/invoice`, body);
 
 export const deleteInvoice = (query: string) =>

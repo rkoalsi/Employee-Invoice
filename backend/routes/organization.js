@@ -1,8 +1,27 @@
 const Organization = require('@models/Organization');
+const Product = require('@models/Product');
 async function getOrganizations(req, res) {
   try {
+    temp = [];
     const org = await Organization.find();
-    res.send(org);
+    let result = await Promise.all(
+      org.map(async (i) => {
+        const products = await Product.find({
+          organizationId: i._id,
+        });
+        return {
+          _id: i._id,
+          name: i.name,
+          gstin: i.gstin,
+          location: i.location,
+          created_at: i.created_at,
+          updated_at: i.updated_at,
+          __v: i.__v,
+          products,
+        };
+      })
+    );
+    res.send(result);
   } catch (error) {
     res.send(error);
   }

@@ -7,6 +7,7 @@ const {
   createEstimate,
   updateEstimate,
   deleteEstimate,
+  estimatesGraphData,
 } = require('./estimate');
 const {
   deleteSalesOrder,
@@ -14,6 +15,7 @@ const {
   createSalesOrder,
   getSalesOrder,
   getSalesOrders,
+  salesOrdersGraphData,
 } = require('./salesOrder');
 const {
   getInvoices,
@@ -21,6 +23,7 @@ const {
   updateInvoice,
   createInvoice,
   getInvoice,
+  invoicesGraphData,
 } = require('./invoice');
 const {
   deleteProduct,
@@ -28,6 +31,7 @@ const {
   getProducts,
   getProduct,
   createProduct,
+  productsGraphData,
 } = require('./product');
 const {
   deleteCustomer,
@@ -35,6 +39,7 @@ const {
   createCustomer,
   getCustomers,
   getCustomer,
+  customersGraphData,
 } = require('./customer');
 const {
   getOrganizations,
@@ -50,6 +55,7 @@ const {
   updateEmployee,
   getEmployee,
   createEmployee,
+  employeesGraphData,
 } = require('./employee');
 
 /* GET home page. */
@@ -97,12 +103,18 @@ router.patch('/employee', updateEmployee);
 /* DELETE Employee */
 router.delete('/employee', deleteEmployee);
 
+/* Employee Graph Data */
+router.get('/employee-data', employeesGraphData);
+
 // ESTIMATES
 /* GET Estimates */
 router.get('/estimates', getEstimates);
 
 /* GET Estimate */
 router.get('/estimate', getEstimate);
+
+/* Estimate Graph Data */
+router.get('/estimate-data', estimatesGraphData);
 
 /* POST Estimate */
 router.post('/estimate', createEstimate);
@@ -120,6 +132,9 @@ router.get('/sales-orders', getSalesOrders);
 /* GET Sales Order */
 router.get('/sales-order', getSalesOrder);
 
+/* Sales Order Graph Data */
+router.get('/sales-order-data', salesOrdersGraphData);
+
 /* POST Sales Order */
 router.post('/sales-order', createSalesOrder);
 
@@ -135,6 +150,9 @@ router.get('/invoices', getInvoices);
 
 /* GET Invoice */
 router.get('/invoice', getInvoice);
+
+/* Invoice Graph Data */
+router.get('/invoice-data', invoicesGraphData);
 
 /* POST Invoice */
 router.post('/invoice', createInvoice);
@@ -152,6 +170,9 @@ router.get('/products', getProducts);
 /* GET Product */
 router.get('/product', getProduct);
 
+/* Product Graph Data */
+router.get('/product-data', productsGraphData);
+
 /* POST Product */
 router.post('/product', createProduct);
 
@@ -167,6 +188,9 @@ router.get('/customers', getCustomers);
 
 /* GET Customer */
 router.get('/customer', getCustomer);
+
+/* Customer Graph Data */
+router.get('/customer-data', customersGraphData);
 
 /* POST Customer */
 router.post('/customer', createCustomer);

@@ -17,6 +17,29 @@ async function getCustomer(req, res) {
     res.send(error);
   }
 }
+async function customersGraphData(req, res) {
+  try {
+    const customers = await Customer.find({
+      organizationId: req.query.organizationId,
+    }).sort([['created_at', -1]]);
+    const r = customers.map((e) => e.created_at);
+    var arr = [];
+    for (let i = 1; i <= 12; i++) {
+      const w = r
+        .map((d) => {
+          return new Date(d).toLocaleDateString();
+        })
+        .filter(
+          (x) =>
+            x.startsWith(`${i}/`) && x.endsWith(`${new Date().getFullYear()}`)
+        ).length;
+      arr.push(w);
+    }
+    res.send(arr);
+  } catch (error) {
+    res.send(error);
+  }
+}
 async function createCustomer(req, res) {
   try {
     const customer = await Customer.create(req.body);
@@ -47,4 +70,5 @@ module.exports = {
   createCustomer,
   updateCustomer,
   deleteCustomer,
+  customersGraphData,
 };
