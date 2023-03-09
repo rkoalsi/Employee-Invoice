@@ -2,12 +2,12 @@ import React from 'react';
 import { useUserContext } from '../../context/user';
 import Router, { useRouter } from 'next/router';
 import { Button, Box, Grid, Typography } from '@mui/material';
-import { getCustomers } from '../../api/customer';
+import { getCustomers, getCustomersData } from '../../api/customer';
 import axios from 'axios';
-import { getInvoices } from '../../api/invoice';
-import { getProducts } from '../../api/product';
-import { getEstimates } from '../../api/estimate';
-import { getSalesOrders } from '../../api/salesOrder';
+import { getInvoices, getInvoicesData } from '../../api/invoice';
+import { getProducts, getProductsData } from '../../api/product';
+import { getEstimates, getEstimatesData } from '../../api/estimate';
+import { getSalesOrders, getSalesOrdersData } from '../../api/salesOrder';
 import DashCard from '../common/DashboardCard';
 import {
   ArticleOutlined,
@@ -16,7 +16,8 @@ import {
   RequestPageOutlined,
   ShoppingBasketOutlined,
 } from '@mui/icons-material';
-import { getEmployees } from '../../api/employee';
+import { getEmployeesData, getEmployees } from '../../api/employee';
+import LineChart from '../common/LineChart';
 interface Props {}
 
 function Home(props: Props) {
@@ -39,6 +40,12 @@ function Home(props: Props) {
         getSalesOrders(user.user.organizationId),
         getInvoices(user.user.organizationId),
         getEmployees(user.user.organizationId),
+        getEmployeesData(user.user.organizationId),
+        getCustomersData(user.user.organizationId),
+        getInvoicesData(user.user.organizationId),
+        getProductsData(user.user.organizationId),
+        getEstimatesData(user.user.organizationId),
+        getSalesOrdersData(user.user.organizationId),
       ]);
       setData([
         res[0].data,
@@ -48,6 +55,12 @@ function Home(props: Props) {
         res[4].data,
         res[5].data.filter((e: any) => e.role === 'employee'),
         res[5].data.filter((e: any) => e.role === 'admin'),
+        res[6].data,
+        res[7].data,
+        res[8].data,
+        res[9].data,
+        res[10].data,
+        res[11].data,
       ]);
     } catch (err) {
       console.log(err);
@@ -60,26 +73,32 @@ function Home(props: Props) {
     setUser({});
     Router.push('/login');
   };
+  const onClickDashboard = () => {
+    Router.push('/dashboard');
+  };
 
   if (user && user.token) {
     return (
       <Box
         component='span'
         m={8}
-        gap={'8px'}
+        gap={'2px'}
         display='flex'
         flexDirection={'column'}
         justifyContent='center'
         alignItems='center'
       >
         <Typography variant={'h2'}>
-          Welcome {user.user.name}. You are an {user.user.role}
+          Welcome {user.user.name[0].toUpperCase() + user.user.name.slice(1)}.
+        </Typography>
+        <br />
+        <Typography variant={'h3'}>
+          You are an {user.user.role[0].toUpperCase() + user.user.role.slice(1)}
         </Typography>
         <br /> <br />
         <Grid
           container
-          spacing={4}
-          direction={'row'}
+          spacing={{ xs: 2, md: 3 }}
           alignItems={'center'}
           justifyContent={'center'}
         >
@@ -87,6 +106,7 @@ function Home(props: Props) {
             <DashCard
               icon={<GroupOutlined />}
               text={`Total Customers: ${data[0]?.length}`}
+              graph={<LineChart data={data[8]} title={'Customers Growth'} />}
               onClick={() => router.push('/customers')}
             />
           </Grid>
@@ -96,13 +116,9 @@ function Home(props: Props) {
                 <DashCard
                   icon={<GroupOutlined />}
                   text={`Total Employees: ${data[5]?.length}`}
-                  onClick={() => router.push('/employees')}
-                />
-              </Grid>
-              <Grid item>
-                <DashCard
-                  icon={<GroupOutlined />}
-                  text={`Total Admins: ${data[6]?.length}`}
+                  graph={
+                    <LineChart data={data[7]} title={'Employees Growth'} />
+                  }
                   onClick={() => router.push('/employees')}
                 />
               </Grid>
@@ -112,6 +128,7 @@ function Home(props: Props) {
             <DashCard
               icon={<ShoppingBasketOutlined />}
               text={`Total Products: ${data[1]?.length}`}
+              graph={<LineChart data={data[10]} title={'Products Growth'} />}
               onClick={() => router.push('/products')}
             />
           </Grid>
@@ -119,6 +136,7 @@ function Home(props: Props) {
             <DashCard
               icon={<ArticleOutlined />}
               text={`Total Estimates: ${data[2]?.length}`}
+              graph={<LineChart data={data[11]} title={'Estimates Growth'} />}
               onClick={() => router.push('/estimates')}
             />
           </Grid>
@@ -126,6 +144,9 @@ function Home(props: Props) {
             <DashCard
               icon={<Inventory2Outlined />}
               text={`Total Sales Orders: ${data[3]?.length}`}
+              graph={
+                <LineChart data={data[12]} title={'Sales Orders Growth'} />
+              }
               onClick={() => router.push('/sales-orders')}
             />
           </Grid>
@@ -133,6 +154,7 @@ function Home(props: Props) {
             <DashCard
               icon={<RequestPageOutlined />}
               text={`Total Invoices: ${data[4]?.length}`}
+              graph={<LineChart data={data[9]} title={'Invoices Growth'} />}
               onClick={() => router.push('/invoices')}
             />
           </Grid>
@@ -153,8 +175,10 @@ function Home(props: Props) {
       <Button variant={'outlined'} onClick={onClickSignOut}>
         Log In
       </Button>
+      <Button variant={'outlined'} onClick={onClickDashboard}>
+        Go to Dashboard
+      </Button>
     </Box>
   );
 }
-
 export default Home;

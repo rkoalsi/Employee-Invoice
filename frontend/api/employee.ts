@@ -8,6 +8,9 @@ export const createEmployee = (body: any) =>
 export const getEmployees = (query: string) =>
   axios.get(`${base}/employees?organizationId=${query}`);
 
+export const getEmployeesData = (query: string) =>
+  axios.get(`${base}/employee-data?organizationId=${query}`);
+
 export const getEmployee = (body: any) => axios.get(`${base}/employee`, body);
 
 export const deleteEmployee = (query: any) =>

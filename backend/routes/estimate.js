@@ -29,6 +29,29 @@ async function getEstimate(req, res) {
     res.send(error);
   }
 }
+async function estimatesGraphData(req, res) {
+  try {
+    const estimates = await Estimate.find({
+      organizationId: req.query.organizationId,
+    }).sort([['created_at', -1]]);
+    const r = estimates.map((e) => e.created_at);
+    var arr = [];
+    for (let i = 1; i <= 12; i++) {
+      const w = r
+        .map((d) => {
+          return new Date(d).toLocaleDateString();
+        })
+        .filter(
+          (x) =>
+            x.startsWith(`${i}/`) && x.endsWith(`${new Date().getFullYear()}`)
+        ).length;
+      arr.push(w);
+    }
+    res.send(arr);
+  } catch (error) {
+    res.send(error);
+  }
+}
 async function updateEstimate(req, res) {
   try {
     const est = await Estimate.updateOne({ _id: req.body._id }, req.body);
@@ -51,4 +74,5 @@ module.exports = {
   createEstimate,
   updateEstimate,
   deleteEstimate,
+  estimatesGraphData,
 };

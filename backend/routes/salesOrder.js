@@ -38,6 +38,32 @@ async function createSalesOrder(req, res) {
     res.send(error);
   }
 }
+
+async function salesOrdersGraphData(req, res) {
+  try {
+    const salesOrders = await SalesOrder.find({
+      organizationId: req.query.organizationId,
+    }).sort([['created_at', -1]]);
+    const r = salesOrders.map((e) => e.created_at);
+    console.log(r);
+    var arr = [];
+    for (let i = 1; i <= 12; i++) {
+      const w = r
+        .map((d) => {
+          return new Date(d).toLocaleDateString();
+        })
+        .filter(
+          (x) =>
+            x.startsWith(`${i}/`) && x.endsWith(`${new Date().getFullYear()}`)
+        ).length;
+      arr.push(w);
+    }
+    res.send(arr);
+  } catch (error) {
+    res.send(error);
+  }
+}
+
 async function updateSalesOrder(req, res) {
   try {
     const so = await SalesOrder.updateOne({ _id: req.body._id }, req.body);
@@ -60,4 +86,5 @@ module.exports = {
   createSalesOrder,
   updateSalesOrder,
   deleteSalesOrder,
+  salesOrdersGraphData,
 };

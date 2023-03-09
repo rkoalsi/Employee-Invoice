@@ -8,6 +8,9 @@ export const createCustomer = (body: any) =>
 export const getCustomers = (query: string) =>
   axios.get(`${base}/customers?organizationId=${query}`);
 
+export const getCustomersData = (query: string) =>
+  axios.get(`${base}/customer-data?organizationId=${query}`);
+
 export const getCustomer = (body: any) => axios.get(`${base}/customer`, body);
 
 export const deleteCustomer = (query: any) =>

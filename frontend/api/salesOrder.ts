@@ -7,7 +7,8 @@ export const createSalesOrder = (body: any) =>
 
 export const getSalesOrders = (query: string) =>
   axios.get(`${base}/sales-orders?organizationId=${query}`);
-
+export const getSalesOrdersData = (query: string) =>
+  axios.get(`${base}/sales-order-data?organizationId=${query}`);
 export const getSalesOrder = (body: any) =>
   axios.get(`${base}/sales-order`, body);
 

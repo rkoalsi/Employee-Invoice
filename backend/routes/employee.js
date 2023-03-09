@@ -11,6 +11,29 @@ async function getEmployees(req, res) {
     res.send(error);
   }
 }
+async function employeesGraphData(req, res) {
+  try {
+    const employees = await User.find({
+      organizationId: req.query.organizationId,
+    }).sort([['created_at', -1]]);
+    const r = employees.map((e) => e.created_at);
+    var arr = [];
+    for (let i = 1; i <= 12; i++) {
+      const w = r
+        .map((d) => {
+          return new Date(d).toLocaleDateString();
+        })
+        .filter(
+          (x) =>
+            x.startsWith(`${i}/`) && x.endsWith(`${new Date().getFullYear()}`)
+        ).length;
+      arr.push(w);
+    }
+    res.send(arr);
+  } catch (error) {
+    res.send(error);
+  }
+}
 async function getEmployee(req, res) {
   try {
     const user = await User.findById(req.body.id);
@@ -52,4 +75,5 @@ module.exports = {
   deleteEmployee,
   createEmployee,
   getEmployee,
+  employeesGraphData,
 };
