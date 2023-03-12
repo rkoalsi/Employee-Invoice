@@ -192,11 +192,14 @@ function Invoices(props: Props) {
       <InvoiceTable
         columns={[
           'Customer',
-          'Products - Amount',
+          'Products-Amount',
           'Total',
           'Created At',
           'Delete',
           'Edit',
+          'Email',
+          'Sales Order',
+          'Estimates',
         ]}
         rows={invoices}
         open={open}
@@ -204,6 +207,8 @@ function Invoices(props: Props) {
         setValues={setValues}
         setIsEdit={setIsEdit}
         deleteData={deleteData}
+        setShow={setShow}
+        setMessage={setMessage}
       />
     </Box>
   );

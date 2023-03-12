@@ -1,5 +1,7 @@
 const SalesOrder = require('@models/SalesOrder');
 const Product = require('@models/Product');
+const Invoice = require('../models/Invoice');
+const Estimate = require('../models/Estimate');
 async function getSalesOrders(req, res) {
   try {
     const so = await SalesOrder.find({
@@ -74,8 +76,37 @@ async function updateSalesOrder(req, res) {
 }
 async function deleteSalesOrder(req, res) {
   try {
-    const so = await SalesOrder.deleteOne({ _id: req.query.id });
-    res.send(`${so.deletedCount} Item Successfully Deleted`);
+    const inv = await Invoice.find({ salesOrder: req.query.id });
+    const est = await Estimate.find({ salesOrder: req.query.id });
+    if (inv.length > 0) {
+      res.send(
+        `Cannot Delete Sales Order as it is linked to Invoice - ${inv[0]._id}`
+      );
+    }
+
+    if (inv.length === 0) {
+      if (est.length > 0) {
+        await Promise.all(
+          est.map(async (i) => {
+            await Estimate.updateOne(
+              { _id: i._id },
+              { $unset: { salesOrder: 1 } }
+            );
+          })
+        );
+      }
+      const sO = await SalesOrder.findById(req.query.id);
+      const productIds = sO.products.map((p) => p.product);
+      productIds.map(async (p, i) => {
+        const product = await Product.findOne({ _id: p });
+        await Product.updateOne(
+          { _id: p },
+          { stock: product.stock + sO.products[i].amount }
+        );
+      });
+      const so = await SalesOrder.deleteOne({ _id: req.query.id });
+      res.send(`${so.deletedCount} Item Successfully Deleted`);
+    }
   } catch (error) {
     res.send(error);
   }

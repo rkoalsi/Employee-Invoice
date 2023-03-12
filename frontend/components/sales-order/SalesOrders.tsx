@@ -197,6 +197,8 @@ function SalesOrders(props: Props) {
           'Created At',
           'Delete',
           'Edit',
+          'Estimate',
+          'Invoice',
         ]}
         rows={salesOrders}
         open={open}

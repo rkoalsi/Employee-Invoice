@@ -24,6 +24,14 @@ const EstimateSchema = new Schema(
       type: Schema.Types.Number,
       required: true,
     },
+    salesOrder: {
+      type: Schema.Types.ObjectId,
+      ref: 'salesOrders',
+    },
+    invoice: {
+      type: Schema.Types.ObjectId,
+      ref: 'invoices',
+    },
   },
 
   {

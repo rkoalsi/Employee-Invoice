@@ -23,6 +23,7 @@ function Customers(props: Props) {
     shop: '',
     gstin: '',
     phone: '',
+    email: '',
   });
 
   const createData = async () => {
@@ -31,7 +32,7 @@ function Customers(props: Props) {
       const data = await createCustomer(d);
       if (data.status == 200) {
         setMessage('Customer Successfully Created');
-        setValues({ name: '', shop: '', gstin: '', phone: '' });
+        setValues({ name: '', shop: '', gstin: '', phone: '', email: '' });
         setShow(true);
       }
     } catch (error) {
@@ -39,7 +40,7 @@ function Customers(props: Props) {
     }
   };
   const onClickCancel = () => {
-    setValues({ name: '', shop: '', gstin: '', phone: '' });
+    setValues({ name: '', shop: '', gstin: '', phone: '', email: '' });
   };
   const deleteCustom = async (r: string) => {
     try {
@@ -94,6 +95,9 @@ function Customers(props: Props) {
       case 'phone':
         setValues({ ...values, phone: e.target.value });
         break;
+      case 'email':
+        setValues({ ...values, email: e.target.value });
+        break;
       default:
         break;
     }
@@ -127,7 +131,7 @@ function Customers(props: Props) {
       />
       <CustomerTable
         rows={data}
-        columns={['Name', 'Shop', 'GSTIN', 'Phone', 'Delete', 'Edit']}
+        columns={['Name', 'Shop', 'GSTIN', 'Email', 'Phone', 'Delete', 'Edit']}
         open={open}
         deleteCustom={deleteCustom}
         setOpen={setOpen}

@@ -58,6 +58,17 @@ function CustomersDrawer(props: any) {
         />
         <TextField
           style={{ width: '240px' }}
+          onChange={(e: any) => onChange('email', e)}
+          required
+          value={values.email}
+          fullWidth
+          label='Email'
+          type='email'
+          id='email'
+          autoComplete='new-password'
+        />
+        <TextField
+          style={{ width: '240px' }}
           onChange={(e: any) => onChange('phone', e)}
           required
           value={values.phone}

@@ -197,6 +197,8 @@ function Estimates(props: Props) {
           'Created At',
           'Delete',
           'Edit',
+          'Sales Order',
+          'Invoice',
         ]}
         rows={estimates}
         open={open}
@@ -204,6 +206,8 @@ function Estimates(props: Props) {
         setValues={setValues}
         setIsEdit={setIsEdit}
         deleteData={deleteData}
+        setShow={setShow}
+        setMessage={setMessage}
       />
     </Box>
   );

@@ -20,8 +20,8 @@ export default function CustomerTable(props: any) {
       >
         <TableHead>
           <TableRow>
-            {columns.map((c: String) => (
-              <TableCell>{c}</TableCell>
+            {columns.map((c: string) => (
+              <TableCell key={c}>{c}</TableCell>
             ))}
           </TableRow>
         </TableHead>
@@ -36,6 +36,7 @@ export default function CustomerTable(props: any) {
               </TableCell>
               <TableCell>{row.shop}</TableCell>
               <TableCell>{row.gstin}</TableCell>
+              <TableCell>{row.email}</TableCell>
               <TableCell>{row.phone}</TableCell>
               <TableCell>
                 <DeleteForever
