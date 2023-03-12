@@ -6,10 +6,28 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { DeleteForever, Edit } from '@mui/icons-material';
+import {
+  DeleteForever,
+  Edit,
+  EmailOutlined,
+  MarkEmailRead,
+  MarkEmailReadTwoTone,
+  MarkEmailUnread,
+} from '@mui/icons-material';
+import { sendInvoiceEmail } from '../../api/invoice';
+import { Box, Button, Typography } from '@mui/material';
 
 export default function InvoiceTable(props: any) {
-  const { columns, rows, setOpen, setValues, setIsEdit, deleteData } = props;
+  const {
+    columns,
+    rows,
+    setOpen,
+    setValues,
+    setIsEdit,
+    deleteData,
+    setShow,
+    setMessage,
+  } = props;
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label='simple table'>
@@ -49,6 +67,49 @@ export default function InvoiceTable(props: any) {
                     setValues(row);
                   }}
                 />
+              </TableCell>
+              <TableCell>
+                {row.sentEmail ? (
+                  <MarkEmailRead
+                    onClick={() => {
+                      setShow(true);
+                      setMessage(
+                        `Email has already been sent to ${row.customer.name}`
+                      );
+                    }}
+                  />
+                ) : (
+                  <MarkEmailUnread
+                    onClick={async () => {
+                      await sendInvoiceEmail({
+                        id: row._id,
+                        email: `${row.customer.email}`,
+                      });
+                      setShow(true);
+                      setMessage(
+                        `Successfully Sent Email to ${row.customer.name}`
+                      );
+                    }}
+                  />
+                )}
+              </TableCell>
+              <TableCell>
+                {!row.salesOrder ? (
+                  <Button onClick={() => console.log(row)}>
+                    Create Sales Order
+                  </Button>
+                ) : (
+                  <Typography>{row.salesOrder}</Typography>
+                )}
+              </TableCell>
+              <TableCell>
+                {!row.estimate ? (
+                  <Button onClick={() => console.log(row)}>
+                    Create Invoice
+                  </Button>
+                ) : (
+                  <Typography>{row.estimate}</Typography>
+                )}
               </TableCell>
             </TableRow>
           ))}

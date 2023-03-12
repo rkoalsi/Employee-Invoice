@@ -7,9 +7,56 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { DeleteForever, Edit } from '@mui/icons-material';
+import { Button, Typography } from '@mui/material';
+import { updateSalesOrder } from '../../api/salesOrder';
+import { createInvoice } from '../../api/invoice';
+import { createEstimate } from '../../api/estimate';
 
 export default function SalesOrdersTable(props: any) {
-  const { columns, rows, setOpen, setValues, setIsEdit, deleteData } = props;
+  const {
+    columns,
+    rows,
+    setOpen,
+    setValues,
+    setIsEdit,
+    deleteData,
+    setMessage,
+    setShow,
+  } = props;
+  const createEst = async (row: any) => {
+    var rowC = { ...row };
+    delete rowC['_id'];
+    const res = await createEstimate({ ...rowC, estimate: row._id });
+    await updateSalesOrder({ _id: row._id, estimate: res.data._id });
+    console.log(res.data);
+    if (res.status == 200) {
+      setShow(true);
+      setMessage('Successfully Created Sales Order');
+    }
+  };
+  const createInv = async (row: any) => {
+    try {
+      var rowC = { ...row };
+      delete rowC['_id'];
+      const res = await createInvoice({
+        ...rowC,
+        estimate: row.estimate,
+        salesOrder: row._id,
+      });
+      await updateSalesOrder({ _id: row._id, invoice: res.data._id });
+      if (res.status == 200) {
+        setShow(true);
+        setMessage('Successfully Created Invoice');
+      }
+      if (res.data.errors) {
+        setShow(true);
+        setMessage(`Error Creating Invoice`);
+      }
+    } catch (error) {
+      setShow(true);
+      setMessage('Error Creating Invoice`');
+    }
+  };
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label='simple table'>
@@ -49,6 +96,22 @@ export default function SalesOrdersTable(props: any) {
                     setValues(row);
                   }}
                 />
+              </TableCell>
+              <TableCell>
+                {!row.estimate ? (
+                  <Button onClick={() => createEst(row)}>
+                    Create Estimate
+                  </Button>
+                ) : (
+                  <Typography>{row.estimate}</Typography>
+                )}
+              </TableCell>
+              <TableCell>
+                {!row.invoice ? (
+                  <Button onClick={() => createInv(row)}>Create Invoice</Button>
+                ) : (
+                  <Typography>{row.invoice}</Typography>
+                )}
               </TableCell>
             </TableRow>
           ))}

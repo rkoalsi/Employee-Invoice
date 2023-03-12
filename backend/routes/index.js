@@ -24,6 +24,7 @@ const {
   createInvoice,
   getInvoice,
   invoicesGraphData,
+  emailInvoice,
 } = require('./invoice');
 const {
   deleteProduct,
@@ -162,6 +163,9 @@ router.patch('/invoice', updateInvoice);
 
 /* DELETE Invoice */
 router.delete('/invoice', deleteInvoice);
+
+/* Email Invoice */
+router.post('/email-invoice', emailInvoice);
 
 // PRODUCTS
 /* GET Products */

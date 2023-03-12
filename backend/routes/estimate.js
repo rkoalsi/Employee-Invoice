@@ -1,4 +1,5 @@
 const Estimate = require('@models/Estimate');
+const Invoice = require('../models/Invoice');
 
 async function getEstimates(req, res) {
   try {
@@ -62,8 +63,26 @@ async function updateEstimate(req, res) {
 }
 async function deleteEstimate(req, res) {
   try {
-    const est = await Estimate.deleteOne({ _id: req.query.id });
-    res.send(`${est.deletedCount} Item Successfully Deleted`);
+    const est = await Estimate.find({ _id: req.query.id });
+    if (est[0].invoice && est[0].salesOrder) {
+      res.send(
+        `Cannot Delete Estimate as it is linked to Invoice - ${est[0].invoice} and Sales Order ${est[0].salesOrder}`
+      );
+    }
+    if (est[0].invoice) {
+      res.send(
+        `Cannot Delete Estimate as it is linked to Invoice ${est[0].invoice}`
+      );
+    }
+    if (est[0].salesOrder) {
+      res.send(
+        `Cannot Delete Estimate as it is linked to Sales Order ${est[0].salesOrder}`
+      );
+    }
+    if (!est[0].salesOrder && !est[0].invoice) {
+      const est2 = await Estimate.deleteOne({ _id: req.query.id });
+      res.send(`${est2.deletedCount} Item Successfully Deleted`);
+    }
   } catch (error) {
     res.send(error);
   }

@@ -25,6 +25,14 @@ const SalesOrderSchema = new Schema(
       type: Schema.Types.Number,
       required: true,
     },
+    estimate: {
+      type: Schema.Types.ObjectId,
+      ref: 'estimates',
+    },
+    invoice: {
+      type: Schema.Types.ObjectId,
+      ref: 'invoices',
+    },
   },
   {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
