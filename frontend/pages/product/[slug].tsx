@@ -17,6 +17,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import CloseIcon from '@mui/icons-material/Close';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
 interface Data {
   _id: string;
@@ -44,6 +46,14 @@ function ProductPage(props: { data: Data; hasError: boolean }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  // const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+  //   if (reason === 'clickaway') {
+  //     return;
+  //   }
+
+  //   setOpen(false);
+  // };
+  // const handleClick = () => setOpen(true);
   
   if (router.isFallback) {
     return <h1>Loading...</h1>;
@@ -77,7 +87,7 @@ function ProductPage(props: { data: Data; hasError: boolean }) {
       <TextField
             id="outlined-number"
             label="Quantity"
-            placeholder='eg: 1'
+            // placeholder='product?'
             type="number"
             InputProps={{
               inputProps: { 
@@ -146,6 +156,11 @@ function ProductPage(props: { data: Data; hasError: boolean }) {
         <DialogActions>
           <Button startIcon={<CloseIcon/>} onClick={handleClose}>Close</Button>
           <Button onClick={handleClose}>Submit</Button>
+            {/* <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+              <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                Successful
+              </Alert>
+            </Snackbar> */}
         </DialogActions>
       </Dialog>
     </Box>
