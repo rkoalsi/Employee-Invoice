@@ -191,6 +191,7 @@ function Invoices(props: Props) {
       />
       <InvoiceTable
         columns={[
+          'Invoice',
           'Customer',
           'Products-Amount',
           'Total',

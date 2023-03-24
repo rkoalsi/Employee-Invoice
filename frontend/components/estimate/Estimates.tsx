@@ -191,6 +191,7 @@ function Estimates(props: Props) {
       />
       <EstimatesTable
         columns={[
+          'Estimate',
           'Customer',
           'Products - Amount',
           'Total',

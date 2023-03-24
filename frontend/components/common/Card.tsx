@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import colors from '../../constants';
+// import colors from '../../constants';
 
 interface CardProps {
   align?: String;
@@ -8,7 +8,6 @@ interface CardProps {
 
 const Card = styled.div<CardProps>`
   padding: 16px;
-  background: ${colors.blue};
   border-radius: 16px;
   display: flex;
   align-items: ${(p: any) => p.align ?? 'center'};

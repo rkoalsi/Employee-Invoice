@@ -146,6 +146,7 @@ async function deleteInvoice(req, res) {
 
 async function emailInvoice(req, res) {
   const { id, email } = req.body;
+  console.log(req.body);
   try {
     const inv = await Invoice.findById(id)
       .populate('customer')

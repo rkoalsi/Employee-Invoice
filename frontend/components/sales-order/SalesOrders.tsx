@@ -191,6 +191,7 @@ function SalesOrders(props: Props) {
       />
       <SalesOrdersTable
         columns={[
+          'Sales Order',
           'Customer',
           'Products - Amount',
           'Total',

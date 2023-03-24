@@ -11,6 +11,8 @@ import { Button, Typography } from '@mui/material';
 import { updateSalesOrder } from '../../api/salesOrder';
 import { createInvoice } from '../../api/invoice';
 import { createEstimate } from '../../api/estimate';
+import { SalesOrderData } from '../../types';
+import { useRouter } from 'next/router';
 
 export default function SalesOrdersTable(props: any) {
   const {
@@ -23,6 +25,13 @@ export default function SalesOrdersTable(props: any) {
     setMessage,
     setShow,
   } = props;
+  const router = useRouter();
+  const onClickInvoice = (d: any) => {
+    router.push(`/invoice/${d.organizationId}/${d.invoice}`);
+  };
+  const onClickEstimate = (d: any) => {
+    router.push(`/estimate/${d.organizationId}/${d.estimate}`);
+  };
   const createEst = async (row: any) => {
     var rowC = { ...row };
     delete rowC['_id'];
@@ -68,13 +77,16 @@ export default function SalesOrdersTable(props: any) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row: any) => (
+          {rows.map((row: SalesOrderData) => (
             <TableRow
               key={`${row.customer}${row.created_at} `}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component='th' scope='row'>
-                {row.customer.name}
+                SO-{row._id.slice(-3).toUpperCase()}
+              </TableCell>
+              <TableCell component='th' scope='row'>
+                {row?.customer?.name}
               </TableCell>
               {row.products.map((p: any) => (
                 <TableRow>
@@ -103,14 +115,32 @@ export default function SalesOrdersTable(props: any) {
                     Create Estimate
                   </Button>
                 ) : (
-                  <Typography>{row.estimate}</Typography>
+                  <Button
+                    onClick={() => onClickEstimate(row)}
+                    sx={{
+                      '&:hover': {
+                        cursor: 'pointer',
+                      },
+                    }}
+                  >
+                    EST-{row.estimate.slice(-3).toUpperCase()}
+                  </Button>
                 )}
               </TableCell>
               <TableCell>
                 {!row.invoice ? (
                   <Button onClick={() => createInv(row)}>Create Invoice</Button>
                 ) : (
-                  <Typography>{row.invoice}</Typography>
+                  <Button
+                    onClick={() => onClickInvoice(row)}
+                    sx={{
+                      '&:hover': {
+                        cursor: 'pointer',
+                      },
+                    }}
+                  >
+                    INV-{row.invoice.slice(-3).toUpperCase()}
+                  </Button>
                 )}
               </TableCell>
             </TableRow>

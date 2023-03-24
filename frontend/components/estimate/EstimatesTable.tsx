@@ -6,17 +6,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {
-  CheckBox,
-  CheckBoxOutlineBlank,
-  CheckCircleOutline,
-  DeleteForever,
-  Edit,
-} from '@mui/icons-material';
-import { Button, Typography } from '@mui/material';
+import { DeleteForever, Edit } from '@mui/icons-material';
+import { Button } from '@mui/material';
 import { createSalesOrder, updateSalesOrder } from '../../api/salesOrder';
 import { updateEstimate } from '../../api/estimate';
 import { createInvoice } from '../../api/invoice';
+import { useRouter } from 'next/router';
 
 export default function EstimatesTable(props: any) {
   const {
@@ -29,6 +24,15 @@ export default function EstimatesTable(props: any) {
     setMessage,
     setShow,
   } = props;
+  const router = useRouter();
+
+  const onClickInvoice = (d: any) => {
+    router.push(`/invoice/${d.organizationId}/${d.invoice}`);
+  };
+  const onClickSalesOrder = (d: any) => {
+    router.push(`/sales-order/${d.organizationId}/${d.salesOrder}`);
+  };
+
   const createSO = async (row: any) => {
     var rowC = { ...row };
     delete rowC['_id'];
@@ -40,6 +44,7 @@ export default function EstimatesTable(props: any) {
       setMessage('Successfully Created Sales Order');
     }
   };
+
   const createInv = async (row: any) => {
     try {
       if (row.salesOrder) {
@@ -90,6 +95,9 @@ export default function EstimatesTable(props: any) {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component='th' scope='row'>
+                EST-{row._id.slice(-3).toUpperCase()}
+              </TableCell>
+              <TableCell component='th' scope='row'>
                 {row.customer.name}
               </TableCell>
               {row.products.map((p: any) => (
@@ -125,14 +133,32 @@ export default function EstimatesTable(props: any) {
                     Create Sales Order
                   </Button>
                 ) : (
-                  <Typography>{row.salesOrder}</Typography>
+                  <Button
+                    sx={{
+                      '&:hover': {
+                        cursor: 'pointer',
+                      },
+                    }}
+                    onClick={() => onClickSalesOrder(row)}
+                  >
+                    SO-{row.salesOrder.slice(-3).toUpperCase()}
+                  </Button>
                 )}
               </TableCell>
               <TableCell>
                 {!row.invoice ? (
                   <Button onClick={() => createInv(row)}>Create Invoice</Button>
                 ) : (
-                  <Typography>{row.invoice}</Typography>
+                  <Button
+                    sx={{
+                      '&:hover': {
+                        cursor: 'pointer',
+                      },
+                    }}
+                    onClick={() => onClickInvoice(row)}
+                  >
+                    INV-{row.invoice.slice(-3).toUpperCase()}
+                  </Button>
                 )}
               </TableCell>
             </TableRow>

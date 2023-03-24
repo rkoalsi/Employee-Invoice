@@ -28,7 +28,7 @@ function EstimatesDrawer(props: any) {
     w.splice(i, 1);
     setValues({ ...values, products: w });
   };
-  const nums = Array.from(Array(11).keys());
+  const nums = Array.from(Array(101).keys());
   var numbers: {}[] = [];
   for (let index = 1; index < nums.length; index++) {
     const element = nums[index];

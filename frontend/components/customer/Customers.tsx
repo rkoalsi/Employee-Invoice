@@ -30,7 +30,13 @@ function Customers(props: Props) {
     try {
       const d = { ...values, organizationId: user.user.organizationId };
       const data = await createCustomer(d);
-      if (data.status == 200) {
+      if (Object.keys(data.data.errors).length > 0) {
+        const err = Object.keys(data.data.errors);
+        setMessage(
+          `${err.toString()} field(s) are missing. Product Creation Failed`
+        );
+        setShow(true);
+      } else if (data.status == 200) {
         setMessage('Customer Successfully Created');
         setValues({ name: '', shop: '', gstin: '', phone: '', email: '' });
         setShow(true);

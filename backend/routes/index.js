@@ -58,6 +58,7 @@ const {
   createEmployee,
   employeesGraphData,
 } = require('./employee');
+const { createPurchase } = require('./purchase');
 
 /* GET home page. */
 router.get('/', home);
@@ -186,7 +187,12 @@ router.patch('/product', updateProduct);
 /* DELETE Product */
 router.delete('/product', deleteProduct);
 
+// Purchase
+/* POST Purchase */
+router.post('/purchase', createPurchase);
+
 // CUSTOMERS
+
 /* GET Customers */
 router.get('/customers', getCustomers);
 

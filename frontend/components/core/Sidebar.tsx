@@ -24,8 +24,17 @@ import {
 } from '@mui/icons-material';
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
-
-const NAVIGATION: {} = {
+interface NavigationProps<T> {
+  customer: SubNavigationProps[];
+  employee: SubNavigationProps[];
+  admin: SubNavigationProps[];
+}
+interface SubNavigationProps {
+  label: string;
+  value: string;
+  icon: React.ReactComponentElement<any, any>;
+}
+const NAVIGATION: NavigationProps<string> = {
   customer: [{ label: 'Home', value: '/', icon: <Home /> }],
   employee: [
     { label: 'Home', value: '/', icon: <Home /> },

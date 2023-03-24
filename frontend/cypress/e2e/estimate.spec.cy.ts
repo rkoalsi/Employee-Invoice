@@ -1,5 +1,8 @@
+import { getProducts } from '../../api/product';
 import { generateRandomPhoneNumber, generateRandomString } from '../helpers';
-
+const d = async () => {
+  const res = await getProducts;
+};
 describe('estimate', () => {
   before(() => {
     cy.visit('http://localhost:3000/login');
@@ -11,36 +14,23 @@ describe('estimate', () => {
   });
   it('Estimate', async () => {
     /* Create Estimate */
-    cy.get('.MuiButtonBase-root').click();
-    cy.get('#demo-select-small2')
-      .parent()
-      .click()
-      .get('ul > li[data-value="63d7730f9679cf0cf9a12615"]')
-      .click();
-    cy.get('.css-mmtzvg > .MuiButtonBase-root').click();
-    cy.get('#product')
-      .parent()
-      .click()
-      .get('ul > li[data-value="63da5922e6f9ca18bfbefa91"]')
-      .click();
-    cy.get('#amount').parent().click().get('ul > li[data-value="3"]').click();
-    cy.get('.MuiButton-outlinedPrimary').click();
-    // cy.get('#name').click().type(name);
-    // cy.get('#shopName').click().type(shopName);
-    // cy.get('#gstin').click().type('27AAPFU0939F1ZV');
-    // cy.get('#phone').click().type(phone);
-    cy.get('#estimate-table').should('contain', '63d7730f9679cf0cf9a12615');
-    // cy.get('#estimate-table').should('contain', shopName);
-    // cy.get('#estimate-table').should('contain', phone);
-    // /* Edit Estimate */
-    // cy.get('#edit-estimate').click();
-    // cy.get('#name').click().type(newName);
+    // cy.get('.MuiButtonBase-root').click();
+    // cy.get('#demo-select-small2').parent().click();
+    // cy.get('.MuiList-root > .MuiButtonBase-root').click();
+    // cy.get('.css-mmtzvg > .MuiButtonBase-root').click();
+    // cy.get('#product').parent().click();
+    // cy.get('.MuiList-root > [tabindex="0"]').click({ multiple: false });
+    // cy.get('#amount').parent().click();
+    // cy.get('[data-value="3"]').click();
     // cy.get('.MuiButton-outlinedPrimary').click();
-    // cy.get('#estimate-table').should('contain', newName);
-    // /* Delete Estimate */
-    // cy.get('#delete-estimate').click();
-    // cy.get('#estimate-table').should('not.contain', newName);
-    // cy.get('#estimate-table').should('not.contain', shopName);
-    // cy.get('#estimate-table').should('not.contain', phone);
+    // cy.get('#estimate-table').should('contain', '3');
+    /* Update Estimate */
+    cy.get('.MuiTableBody-root > :nth-child(1) > :nth-child(6)').click();
+    cy.get('#product').parent().click();
+    cy.get('.MuiList-root > [tabindex="1"]').click({ multiple: false });
+    cy.get('#amount').parent().click();
+    cy.get('[data-value="7"]').click();
+    cy.get('.MuiButton-outlinedPrimary').click();
+    cy.get('#estimate-table').should('contain', '7');
   });
 });

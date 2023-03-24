@@ -42,8 +42,10 @@ async function resetPassword(req, res) {
   try {
     const user = await User.findOne({ email });
     if (user) {
-      const up = await User.updateOne({ email }, { password });
-      res.status(200).send(`${up.modifiedCount} Item Successfully Modified`);
+      const hash = await bcrypt.hash(password, 10);
+      const token = await createToken(user.email);
+      await User.updateOne({ email }, { password: hash });
+      res.status(200).send({ token: token.value, user });
     } else {
       res.status(404).send('User not Found');
     }
