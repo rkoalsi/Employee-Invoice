@@ -130,6 +130,7 @@ export default function Sidebar() {
     <Container>
       <React.Fragment key={'left'}>
         <MenuIcon
+          fontSize={'large'}
           onClick={toggleDrawer('left', true)}
           sx={{
             animation: 'spin 3s linear infinite',

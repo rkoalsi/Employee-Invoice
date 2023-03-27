@@ -98,7 +98,7 @@ export default function EstimatesTable(props: any) {
                 EST-{row._id.slice(-3).toUpperCase()}
               </TableCell>
               <TableCell component='th' scope='row'>
-                {row.customer.name}
+                {row?.customer?.name}
               </TableCell>
               {row.products.map((p: any) => (
                 <TableRow>
