@@ -8,7 +8,7 @@ function EstimatePage(props: { data: SalesOrderData; hasError: boolean }) {
   const router = useRouter();
 
   if (router.isFallback) {
-    return <h1>Loading...</h1>;
+    return <h1 color='white'>Loading...</h1>;
   }
   return (
     <Box

@@ -9,6 +9,7 @@ import {
   updateProduct,
 } from '../../api/product';
 import ProductTable from './ProductTable';
+import { TypographyH2 } from '../common/Typography';
 
 interface Props {}
 
@@ -131,7 +132,9 @@ function Products(props: Props) {
         onClose={() => setShow(false)}
         message={message}
       />
-      Total Number of Products: {data.length}
+      <TypographyH2>
+        Total Number of Products: {data.length}
+      </TypographyH2>
       <ProductsDrawer
         onClickCancel={onClickCancel}
         onChange={onChange}

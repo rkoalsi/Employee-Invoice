@@ -12,6 +12,7 @@ import { getCustomers } from '../../api/customer';
 import { getProducts } from '../../api/product';
 import { ESTIMATE_VERIFICATION_SCHEMA } from '../../helpers/validators';
 import SalesOrdersTable from './SalesOrdersTable';
+import { TypographyH2 } from '../common/Typography';
 
 interface Props {}
 
@@ -176,7 +177,9 @@ function SalesOrders(props: Props) {
         onClose={() => setShow(false)}
         message={message}
       />
-      Total Number of Sales Orders: {salesOrders.length}
+      <TypographyH2>
+        Total Number of Sales Orders: {salesOrders.length}
+      </TypographyH2>
       <SalesOrdersDrawer
         customers={customers}
         products={products}

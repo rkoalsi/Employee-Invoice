@@ -12,6 +12,7 @@ import {
 } from '../../api/estimate';
 import EstimatesTable from './EstimatesTable';
 import { ESTIMATE_VERIFICATION_SCHEMA } from '../../helpers/validators';
+import { TypographyH2 } from '../common/Typography';
 
 interface Props {}
 
@@ -176,9 +177,9 @@ function Estimates(props: Props) {
         onClose={() => setShow(false)}
         message={message}
       />
-      <Typography color={'black'}>
+      <TypographyH2>  
         Total Number of Estimates: {estimates.length}
-      </Typography>
+      </TypographyH2>
       <EstimatesDrawer
         customers={customers}
         products={products}

@@ -10,6 +10,7 @@ import {
   updateEmployee,
   deleteEmployee,
 } from '../../api/employee';
+import { TypographyH2 } from '../common/Typography';
 
 interface Props {}
 
@@ -131,9 +132,10 @@ function Employees(props: Props) {
         onClose={() => setShow(false)}
         message={message}
       />
-      Total Number of {checked ? `Admins` : `Employees`}:{' '}
-      {checked ? admins.length : employees.length}
-      <br />
+      <TypographyH2>
+        Total Number of {checked ? `Admins` : `Employees`}:{' '}
+        {checked ? admins.length : employees.length}
+      </TypographyH2>
       <Box>
         {'\t Employees'}{' '}
         <Switch

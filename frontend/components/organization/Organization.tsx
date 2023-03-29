@@ -3,6 +3,7 @@ import { useUserContext } from '../../context/user';
 import { Box, Button, IconButton } from '@mui/material';
 import CopyToClipboardButton from '../common/CopyToClipButton';
 import { useRouter } from 'next/router';
+import { TypographyH2 } from '../common/Typography';
 
 interface Props {}
 
@@ -30,7 +31,9 @@ function Organization(props: Props) {
         p={2}
         border={'1px solid black'}
       >
+      <TypographyH2>
         Organization Id = {user?.user?.organizationId}
+      </TypographyH2>
         <CopyToClipboardButton
           text={'Organization Id'}
           clickText={user?.user?.organizationId}

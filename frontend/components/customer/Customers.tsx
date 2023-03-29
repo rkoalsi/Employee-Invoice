@@ -9,6 +9,8 @@ import {
   deleteCustomer,
 } from '../../api/customer';
 import CustomerTable from './CustomerTable';
+import { TypographyH2 } from '../common/Typography';
+
 interface Props {}
 
 function Customers(props: Props) {
@@ -124,7 +126,9 @@ function Customers(props: Props) {
         onClose={() => setShow(false)}
         message={message}
       />
-      Total Number of Customers: {data.length}
+      <TypographyH2>
+        Total Number of Customers: {data.length}
+      </TypographyH2>
       <CustomersDrawer
         onChange={onChange}
         values={values}
