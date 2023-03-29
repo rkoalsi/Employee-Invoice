@@ -193,7 +193,7 @@ function SalesOrders(props: Props) {
         columns={[
           'Sales Order',
           'Customer',
-          'Products - Amount',
+          // 'Products - Amount',
           'Total',
           'Created At',
           'Delete',

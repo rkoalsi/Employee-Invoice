@@ -158,8 +158,8 @@ function Hero() {
                   <b>Built with Typescript</b>
                 </Box>
                 <Typography component='span' variant='subtitle2'>
-                  Tokyo features a modern technology stack and is built with
-                  Typescript.
+                  Employee Invoicing features a modern technology stack and is
+                  built with Typescript.
                 </Typography>
               </Typography>
             </Grid>

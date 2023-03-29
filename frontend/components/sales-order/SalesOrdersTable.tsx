@@ -88,14 +88,14 @@ export default function SalesOrdersTable(props: any) {
               <TableCell component='th' scope='row'>
                 {row?.customer?.name}
               </TableCell>
-              {row.products.map((p: any) => (
+              {/* {row.products.map((p: any) => (
                 <TableRow key={p.product._id}>
                   <TableCell>{p.product.name}</TableCell>
                   <TableCell>{p.amount}</TableCell>
                 </TableRow>
-              ))}
+              ))} */}
 
-              <TableCell>{row.total}</TableCell>
+              <TableCell>INR {row.total}</TableCell>
               <TableCell>{new Date(row.created_at).toTimeString()}</TableCell>
               <TableCell>
                 <DeleteForever onClick={() => deleteData(row._id)} />

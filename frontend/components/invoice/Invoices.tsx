@@ -12,6 +12,7 @@ import {
 } from '../../api/invoice';
 import { getCustomers } from '../../api/customer';
 import { getProducts } from '../../api/product';
+import { TypographyH2 } from '../common/Typography';
 
 interface Props {}
 
@@ -176,7 +177,7 @@ function Invoices(props: Props) {
         onClose={() => setShow(false)}
         message={message}
       />
-      Total Number of Invoices: {invoices.length}
+      <TypographyH2>Total Number of Invoices: {invoices.length}</TypographyH2>
       <InvoiceDrawer
         customers={customers}
         products={products}
@@ -193,7 +194,6 @@ function Invoices(props: Props) {
         columns={[
           'Invoice',
           'Customer',
-          'Products-Amount',
           'Total',
           'Created At',
           'Delete',
