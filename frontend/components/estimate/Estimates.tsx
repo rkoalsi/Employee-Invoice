@@ -1,6 +1,6 @@
 import React from 'react';
 import { useUserContext } from '../../context/user';
-import { Box, Snackbar } from '@mui/material';
+import { Box, Snackbar, Typography } from '@mui/material';
 import EstimatesDrawer from './EstimatesDrawer';
 import { getCustomers } from '../../api/customer';
 import { getProducts } from '../../api/product';
@@ -96,7 +96,7 @@ function Estimates(props: Props) {
       if (check) {
         const d = {
           ...values,
-          organizationId: user.user.organizationId,
+          organizationId: user?.user?.organizationId,
           updatedBy: user.user._id,
         };
 
@@ -125,7 +125,7 @@ function Estimates(props: Props) {
       if (check) {
         var v = {
           ...values,
-          organizationId: user.user.organizationId,
+          organizationId: user?.user?.organizationId,
           createdBy: user.user._id,
         };
         console.log(v);
@@ -176,7 +176,9 @@ function Estimates(props: Props) {
         onClose={() => setShow(false)}
         message={message}
       />
-      Total Number of Estimates: {estimates.length}
+      <Typography color={'black'}>
+        Total Number of Estimates: {estimates.length}
+      </Typography>
       <EstimatesDrawer
         customers={customers}
         products={products}
@@ -193,7 +195,6 @@ function Estimates(props: Props) {
         columns={[
           'Estimate',
           'Customer',
-          'Products - Amount',
           'Total',
           'Created At',
           'Delete',

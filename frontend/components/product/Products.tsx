@@ -36,20 +36,18 @@ function Products(props: Props) {
         createdBy: user.user._id,
       };
       const res = await createProduct(d);
-      console.log(Object.keys(res.data.errors).length > 0);
-      if (Object.keys(res.data.errors).length > 0) {
+      if (res.data.errors && Object.keys(res.data.errors).length > 0) {
         const err = Object.keys(res.data.errors);
         setMessage(
           `${err.toString()} field(s) are missing. Product Creation Failed`
         );
-        setShow(true);
       } else if (res.status == 200) {
         setMessage('Product Successfully Created');
-        setShow(true);
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      setMessage(`Error Creating Product`);
     }
+    setShow(true);
   };
   const updateData = async () => {
     try {
@@ -82,7 +80,6 @@ function Products(props: Props) {
     try {
       const res = await getProducts(user.user.organizationId);
       if (res.status == 200) {
-        console.log(res.data[0]);
         setData(res.data);
       }
     } catch (error) {

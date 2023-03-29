@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { DeleteForever, Edit } from '@mui/icons-material';
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { createSalesOrder, updateSalesOrder } from '../../api/salesOrder';
 import { updateEstimate } from '../../api/estimate';
 import { createInvoice } from '../../api/invoice';
@@ -84,14 +84,16 @@ export default function EstimatesTable(props: any) {
         <TableHead>
           <TableRow>
             {columns.map((c: string, i: Number) => (
-              <TableCell key={c}>{c}</TableCell>
+              <>
+                <TableCell key={c}>{c}</TableCell>
+              </>
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row: any) => (
+          {rows?.map((row: any, i: number) => (
             <TableRow
-              key={`${row.customer}${row.created_at} `}
+              key={`${row.customer}${row.created_at}${i} `}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component='th' scope='row'>
@@ -100,12 +102,12 @@ export default function EstimatesTable(props: any) {
               <TableCell component='th' scope='row'>
                 {row?.customer?.name}
               </TableCell>
-              {row.products.map((p: any) => (
-                <TableRow>
+              {/* {row.products.map((p: any) => (
+                <Box key={p.product._id}>
                   <TableCell>{p.product.name}</TableCell>
                   <TableCell>{p.amount}</TableCell>
-                </TableRow>
-              ))}
+                </Box>
+              ))} */}
 
               <TableCell component='th' scope='row'>
                 INR {row.total}

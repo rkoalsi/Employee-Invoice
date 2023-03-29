@@ -42,7 +42,7 @@ export default function BDrawer(props: any) {
             gap={'16px'}
           >
             <Button
-              variant={'outlined'}
+              variant={'contained'}
               color={'error'}
               onClick={() => {
                 toggleDrawer(false);
@@ -54,7 +54,7 @@ export default function BDrawer(props: any) {
               Cancel
             </Button>
             <Button
-              variant={'outlined'}
+              variant={'contained'}
               onClick={() => {
                 toggleDrawer(false);
                 onClickSubmit();

@@ -37,7 +37,7 @@ function Organization(props: Props) {
         />
       </Box>
       <Button onClick={() => router.push(`/${user?.user?.organizationId}`)}>
-        Go to Organization's Page
+        {`Go to Organization's Page`}
       </Button>
     </Box>
   );

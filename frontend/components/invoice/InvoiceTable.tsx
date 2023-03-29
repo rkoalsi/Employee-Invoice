@@ -87,7 +87,7 @@ export default function InvoiceTable(props: any) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row: any) => (
+          {rows?.map((row: any) => (
             <TableRow
               key={`${row.customer}${row.created_at} `}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -99,7 +99,7 @@ export default function InvoiceTable(props: any) {
                 {row?.customer?.name}
               </TableCell>
               {row.products.map((p: any) => (
-                <TableRow>
+                <TableRow key={p.product.name}>
                   <TableCell>{p.product.name}</TableCell>
                   <TableCell>{p.amount}</TableCell>
                 </TableRow>

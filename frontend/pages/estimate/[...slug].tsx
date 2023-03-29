@@ -33,7 +33,7 @@ function EstimatePage(props: { data: SalesOrderData; hasError: boolean }) {
       <br />
       <Typography variant='h2'>Products</Typography>
       {props.data.products.map((p) => (
-        <Typography variant='h3'>
+        <Typography variant='h3' key={p.product._id}>
           {p.product.name} {`\t`} - {p.amount} pcs
         </Typography>
       ))}

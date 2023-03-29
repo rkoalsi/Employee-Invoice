@@ -17,6 +17,8 @@ import {
   Checkbox,
   FormControlLabel,
   FormGroup,
+  createMuiTheme,
+  ThemeProvider,
 } from '@mui/material';
 import { ProductData } from '../../types';
 import { createPurchase } from '../../api/purchase';
@@ -94,6 +96,10 @@ function ProductPage(props: { data: ProductData; hasError: boolean }) {
     }
     if (val.amount === '' || val.amount === 0) {
       setsOpen(true);
+    }
+    if (val.amount > props.data.stock) {
+      setsOpen(true);
+      setMessage('Quantity to be purchased is more than actual stock');
     } else {
       setOpen(true);
     }
@@ -115,163 +121,133 @@ function ProductPage(props: { data: ProductData; hasError: boolean }) {
   if (router.isFallback) {
     return <h1>Loading...</h1>;
   }
+  const theme = createMuiTheme({
+    palette: {
+      mode: 'dark',
+    },
+  });
 
   return (
-    <Box
-      display={'flex'}
-      mt={'20px'}
-      alignItems={'center'}
-      justifyContent={'center'}
-      flexDirection={'column'}
-      gap={'8px'}
-    >
-      <Typography variant='h2'>Product ID: {props.data._id}</Typography>
-      <Typography variant='h2'>Product Name: {props.data.name}</Typography>
-      <Typography variant='h2'>Product GST: {props.data.gst}%</Typography>
-      <Typography variant='h2'>Product Sku: {props.data.sku} </Typography>
-      <Typography variant='h2'>
-        Product Price: {props.data.price} INR
-      </Typography>
-      <Typography variant='h2'>
-        Product Stock: {props.data.stock} pcs
-      </Typography>
-      {Number(val.amount) > 0 && (
-        <Typography variant='h2'>
-          Total:{' '}
-          {Number(props.data.price) * Number(val.amount) +
-            (Number(val.amount) *
-              Number(props.data.price) *
-              Number(props.data.gst)) /
-              100}
-          INR
-        </Typography>
-      )}
+    <ThemeProvider theme={theme}>
       <Box
         display={'flex'}
         mt={'20px'}
         alignItems={'center'}
         justifyContent={'center'}
-        flexDirection={'row'}
-        gap={'16px'}
+        flexDirection={'column'}
+        gap={'8px'}
       >
-        <Box sx={{ minWidth: 120 }}>
-          <TextField
-            id='outlined-number'
-            label='Quantity'
-            type='number'
-            InputProps={{
-              inputProps: {
-                pattern: '[0-9]*',
-                min: 1,
-                defaultValue: 1
-              },
-            }}
-            value={val.amount}
-            onChange={(e) => handleChange('amount', e.target.value)}
-          />
-        </Box>
+        <Typography variant='h2'>Product ID: {props.data._id}</Typography>
+        <Typography variant='h2'>Product Name: {props.data.name}</Typography>
+        <Typography variant='h2'>Product GST: {props.data.gst}%</Typography>
+        <Typography variant='h2'>Product Sku: {props.data.sku} </Typography>
+        <Typography variant='h2'>
+          Product Price: {props.data.price} INR
+        </Typography>
+        <Typography variant='h2'>
+          Product Stock: {props.data.stock} pcs
+        </Typography>
+        {Number(val.amount) > 0 && (
+          <Typography variant='h2'>
+            Total:{' '}
+            {Math.round(
+              Number(props.data.price) * Number(val.amount) +
+                (Number(val.amount) *
+                  Number(props.data.price) *
+                  Number(props.data.gst)) /
+                  100
+            ).toFixed(2)}
+            INR (Tax Inclusive)
+          </Typography>
+        )}
+        <Box
+          display={'flex'}
+          mt={'20px'}
+          alignItems={'center'}
+          justifyContent={'center'}
+          flexDirection={'row'}
+          gap={'16px'}
+        >
+          <Box sx={{ minWidth: 120 }}>
+            <TextField
+              color='info'
+              id='outlined-number'
+              label='Quantity'
+              type='number'
+              InputProps={{
+                inputProps: {
+                  pattern: '[0-9]*',
+                  min: 1,
+                },
+              }}
+              value={val.amount}
+              onChange={(e) => handleChange('amount', e.target.value)}
+            />
+          </Box>
 
-        <Box sx={{ minWidth: 120 }}>
-          <Button
-            variant='contained'
-            color='success'
-            size='large'
-            onClick={handleOpen}
-            startIcon={<InventoryIcon />}
-          >
-            BUY
-          </Button>
-          <Dialog open={open} onClose={handleClose}>
-            {existingCustomer ? (
-              <>
-                <DialogTitle align='center'>
-                  <Box
-                    display={'flex'}
-                    justifyContent={'center'}
-                    flexDirection={'row'}
-                    gap={'16px'}
-                  >
-                    <ArrowBackIosNewOutlined
-                      onClick={() => {
-                        setNext(false);
-                        setExistingCustomer(false);
-                      }}
-                    />
-                    New Customer Details
-                  </Box>
-                </DialogTitle>
-                <DialogContent>
-                  <TextField
-                    autoFocus
-                    margin='dense'
-                    id='name'
-                    label='Name'
-                    type='text'
-                    fullWidth
-                    onChange={(e) => handleChange('name', e.target.value)}
-                    value={val.name}
-                    variant='standard'
-                  />
-                  <TextField
-                    autoFocus
-                    margin='dense'
-                    id='address'
-                    label='Address'
-                    type='text'
-                    fullWidth
-                    onChange={(e) => handleChange('address', e.target.value)}
-                    value={val.address}
-                    variant='standard'
-                  />
-                  <TextField
-                    autoFocus
-                    margin='dense'
-                    id='phone'
-                    label='Phone Number'
-                    type='tel'
-                    fullWidth
-                    onChange={(e) => handleChange('phone', e.target.value)}
-                    value={val.phone}
-                    variant='standard'
-                  />
-                  <TextField
-                    autoFocus
-                    margin='dense'
-                    id='email'
-                    label='Email Address'
-                    type='email'
-                    fullWidth
-                    onChange={(e) => handleChange('email', e.target.value)}
-                    value={val.email}
-                    variant='standard'
-                  />
-                </DialogContent>
-                <DialogActions>
-                  <Button startIcon={<CloseIcon />} onClick={handleClose}>
-                    Close
-                  </Button>
-                  <Button onClick={handleSubmit}>Submit</Button>
-                </DialogActions>
-              </>
-            ) : (
-              <>
-                <DialogTitle align='center' justifyContent={'space-between'}>
-                  {next ? (
+          <Box sx={{ minWidth: 120 }}>
+            <Button
+              variant='contained'
+              color='success'
+              size='large'
+              onClick={handleOpen}
+              startIcon={<InventoryIcon />}
+            >
+              BUY
+            </Button>
+            <Dialog open={open} onClose={handleClose}>
+              {existingCustomer ? (
+                <>
+                  <DialogTitle align='center'>
                     <Box
                       display={'flex'}
                       justifyContent={'center'}
                       flexDirection={'row'}
                       gap={'16px'}
                     >
-                      <ArrowBackIosNewOutlined onClick={() => setNext(false)} />
-                      Existing Customer Details
+                      <ArrowBackIosNewOutlined
+                        onClick={() => {
+                          setNext(false);
+                          setExistingCustomer(false);
+                        }}
+                      />
+                      New Customer Details
                     </Box>
-                  ) : (
-                    `Customer Details`
-                  )}
-                </DialogTitle>
-                <DialogContent>
-                  {next ? (
+                  </DialogTitle>
+                  <DialogContent>
+                    <TextField
+                      autoFocus
+                      margin='dense'
+                      id='name'
+                      label='Name'
+                      type='text'
+                      fullWidth
+                      onChange={(e) => handleChange('name', e.target.value)}
+                      value={val.name}
+                      variant='standard'
+                    />
+                    <TextField
+                      autoFocus
+                      margin='dense'
+                      id='address'
+                      label='Address'
+                      type='text'
+                      fullWidth
+                      onChange={(e) => handleChange('address', e.target.value)}
+                      value={val.address}
+                      variant='standard'
+                    />
+                    <TextField
+                      autoFocus
+                      margin='dense'
+                      id='phone'
+                      label='Phone Number'
+                      type='tel'
+                      fullWidth
+                      onChange={(e) => handleChange('phone', e.target.value)}
+                      value={val.phone}
+                      variant='standard'
+                    />
                     <TextField
                       autoFocus
                       margin='dense'
@@ -283,41 +259,84 @@ function ProductPage(props: { data: ProductData; hasError: boolean }) {
                       value={val.email}
                       variant='standard'
                     />
-                  ) : (
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox />}
-                        label='New Customer'
-                        onChange={() => setExistingCustomer(!existingCustomer)}
+                  </DialogContent>
+                  <DialogActions>
+                    <Button startIcon={<CloseIcon />} onClick={handleClose}>
+                      Close
+                    </Button>
+                    <Button onClick={handleSubmit}>Submit</Button>
+                  </DialogActions>
+                </>
+              ) : (
+                <>
+                  <DialogTitle align='center' justifyContent={'space-between'}>
+                    {next ? (
+                      <Box
+                        display={'flex'}
+                        justifyContent={'center'}
+                        flexDirection={'row'}
+                        gap={'16px'}
+                      >
+                        <ArrowBackIosNewOutlined
+                          onClick={() => setNext(false)}
+                        />
+                        Existing Customer Details
+                      </Box>
+                    ) : (
+                      `Customer Details`
+                    )}
+                  </DialogTitle>
+                  <DialogContent>
+                    {next ? (
+                      <TextField
+                        autoFocus
+                        margin='dense'
+                        id='email'
+                        label='Email Address'
+                        type='email'
+                        fullWidth
+                        onChange={(e) => handleChange('email', e.target.value)}
+                        value={val.email}
+                        variant='standard'
                       />
-                      <FormControlLabel
-                        control={<Checkbox />}
-                        label='Existing Customer'
-                        onChange={() => setNext(true)}
-                      />
-                    </FormGroup>
-                  )}
-                </DialogContent>
-                <DialogActions>
-                  <Button startIcon={<CloseIcon />} onClick={handleClose}>
-                    Close
-                  </Button>
-                  <Button onClick={next ? handleSubmit : handleNext}>
-                    {next ? `Submit` : `Next`}
-                  </Button>
-                </DialogActions>
-              </>
-            )}
-          </Dialog>
+                    ) : (
+                      <FormGroup>
+                        <FormControlLabel
+                          control={<Checkbox />}
+                          label='New Customer'
+                          onChange={() =>
+                            setExistingCustomer(!existingCustomer)
+                          }
+                        />
+                        <FormControlLabel
+                          control={<Checkbox />}
+                          label='Existing Customer'
+                          onChange={() => setNext(true)}
+                        />
+                      </FormGroup>
+                    )}
+                  </DialogContent>
+                  <DialogActions>
+                    <Button startIcon={<CloseIcon />} onClick={handleClose}>
+                      Close
+                    </Button>
+                    <Button onClick={next ? handleSubmit : handleNext}>
+                      {next ? `Submit` : `Next`}
+                    </Button>
+                  </DialogActions>
+                </>
+              )}
+            </Dialog>
+          </Box>
         </Box>
+        <Snackbar
+          open={sOpen}
+          onClose={() => setsOpen(false)}
+          autoHideDuration={2000}
+          message={message}
+        />
       </Box>
-      <Snackbar
-        open={sOpen}
-        onClose={() => setsOpen(false)}
-        autoHideDuration={2000}
-        message={message}
-      />
-    </Box>
+    </ThemeProvider>
   );
 }
 

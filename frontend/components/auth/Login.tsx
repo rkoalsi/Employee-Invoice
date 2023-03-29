@@ -17,6 +17,7 @@ import Copyright from '../common/Copyright';
 import Input from '../common/Input';
 import { useUserContext } from '../../context/user';
 import { SIGNIN_VERIFICATION_SCHEMA } from '../../helpers/validators';
+import { TypographyH2 } from '../common/Typography';
 
 interface Props {}
 
@@ -82,14 +83,11 @@ function Login(props: Props) {
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component='h1' variant='h5' color={'black'}>
-            Sign in
-          </Typography>
+          <TypographyH2>Sign in</TypographyH2>
           <Box
             component='form'
             onSubmit={onClickSignin}
             noValidate
-            color={'black'}
             sx={{ mt: 1 }}
           >
             <Input

@@ -55,6 +55,7 @@ function SalesOrdersDrawer(props: any) {
         />
         {values.products.map((_: any, i: number) => (
           <Box
+            key={values?.products[i]?.product?._id}
             display={'flex'}
             flexDirection={'row'}
             gap={'16px'}

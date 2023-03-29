@@ -24,7 +24,7 @@
     "debug": "~2.6.9",
     "dotenv": "^16.0.3",
     "easyinvoice": "^2.3.3",
-    "express": "~4.16.1",
+    "express": "~4.16.3",
     "http-errors": "~1.6.3",
     "inquirer": "8.0.0",
     "jade": "~1.11.0",

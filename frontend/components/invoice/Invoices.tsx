@@ -96,7 +96,7 @@ function Invoices(props: Props) {
       if (check) {
         const d = {
           ...values,
-          organizationId: user.user.organizationId,
+          organizationId: user?.user?.organizationId,
           updatedBy: user.user._id,
         };
 
@@ -125,7 +125,7 @@ function Invoices(props: Props) {
       if (check) {
         var v = {
           ...values,
-          organizationId: user.user.organizationId,
+          organizationId: user?.user?.organizationId,
           createdBy: user.user._id,
         };
         console.log(v);

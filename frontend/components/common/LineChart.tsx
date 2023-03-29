@@ -1,6 +1,5 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
-import type { ChartData } from 'chart.js';
 import 'chart.js/auto';
 interface PropTypes {
   data: any;

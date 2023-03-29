@@ -1,7 +1,12 @@
-import styled from 'styled-components';
+import { Typography, styled } from '@mui/material';
+export const TypographyH1 = styled(Typography)(
+  ({ theme }: any) => `
+      font-size: ${theme.typography.pxToRem(50)};
+  `
+);
 
-interface TypoProps {}
-
-const Typography = styled.p<TypoProps>``;
-
-export default Typography;
+export const TypographyH2 = styled(Typography)(
+  ({ theme }: any) => `
+      font-size: ${theme.typography.pxToRem(17)};
+  `
+);

@@ -1,5 +1,7 @@
 const Product = require('@models/Product');
 const Estimate = require('../models/Estimate');
+const SalesOrder = require('../models/SalesOrder');
+const Invoice = require('../models/Invoice');
 
 async function getProducts(req, res) {
   try {
@@ -44,8 +46,20 @@ async function getProduct(req, res) {
 }
 async function createProduct(req, res) {
   try {
-    const prd = await Product.create(req.body);
-    res.send(prd);
+    const prds = await Product.find({
+      organizationId: req.body.organizationId,
+    });
+    const arr = prds.map((p) => p.name === req.body.name);
+    if (arr.includes(true)) {
+      res.status(400).json({
+        error: `Cannot create product with duplicate name ${
+          prds[arr.indexOf(true)].name
+        }`,
+      });
+    } else {
+      const prd = await Product.create(req.body);
+      res.send(prd);
+    }
   } catch (error) {
     res.send(error);
   }
@@ -61,6 +75,16 @@ async function updateProduct(req, res) {
 async function deleteProduct(req, res) {
   try {
     const estimate = await Estimate.find({ 'products.product': req.query.id });
+    const salesOrder = await SalesOrder.find({
+      'products.product': req.query.id,
+    });
+    const invoice = await Invoice.find({ 'products.product': req.query.id });
+    if (invoice.length > 0) {
+      res.send(`Product Exists in an Invoice`);
+    }
+    if (salesOrder.length > 0) {
+      res.send(`Product Exists in an Sales Order`);
+    }
     if (estimate.length > 0) {
       res.send(`Product Exists in an Estimate`);
     } else {

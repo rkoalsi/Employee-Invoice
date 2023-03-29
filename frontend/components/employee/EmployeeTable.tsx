@@ -19,8 +19,8 @@ export default function EmployeeTable(props: any) {
       <Table sx={{ minWidth: 650 }} aria-label='simple table'>
         <TableHead>
           <TableRow>
-            {columns.map((c: String) => (
-              <TableCell>{c}</TableCell>
+            {columns.map((c: string) => (
+              <TableCell key={c}>{c}</TableCell>
             ))}
           </TableRow>
         </TableHead>

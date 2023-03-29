@@ -89,7 +89,7 @@ export default function SalesOrdersTable(props: any) {
                 {row?.customer?.name}
               </TableCell>
               {row.products.map((p: any) => (
-                <TableRow>
+                <TableRow key={p.product._id}>
                   <TableCell>{p.product.name}</TableCell>
                   <TableCell>{p.amount}</TableCell>
                 </TableRow>

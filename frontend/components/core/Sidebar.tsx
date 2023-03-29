@@ -25,7 +25,7 @@ import {
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 interface NavigationProps<T> {
-  customer: SubNavigationProps[];
+  [customer: string]: SubNavigationProps[];
   employee: SubNavigationProps[];
   admin: SubNavigationProps[];
 }
@@ -117,7 +117,7 @@ export default function Sidebar() {
             <ListItem key={text.value} disablePadding>
               <ListItemButton onClick={() => Router.push(text.value)}>
                 <ListItemIcon>{text.icon}</ListItemIcon>
-                <ListItemText primary={text.label} />
+                <ListItemText primary={text.label} color={'black'} />
               </ListItemButton>
             </ListItem>
           )
