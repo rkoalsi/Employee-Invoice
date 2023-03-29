@@ -163,6 +163,7 @@ function ProductPage(props: { data: ProductData; hasError: boolean }) {
               inputProps: {
                 pattern: '[0-9]*',
                 min: 1,
+                defaultValue: 1
               },
             }}
             value={val.amount}
