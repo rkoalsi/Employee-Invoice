@@ -29,18 +29,18 @@ function Organization(props: Props) {
         gap={'16px'}
         borderRadius={'16px'}
         p={2}
-        border={'1px solid black'}
+        border={'1px solid gray'}
       >
       <TypographyH2>
-        Organization Id = {user?.user?.organizationId}
+        Organization ID = {user?.user?.organizationId}
       </TypographyH2>
         <CopyToClipboardButton
-          text={'Organization Id'}
+          text={'Organization ID'}
           clickText={user?.user?.organizationId}
         />
       </Box>
       <Button onClick={() => router.push(`/${user?.user?.organizationId}`)}>
-        {`Go to Organization's Page`}
+        {`Go To Organization's Page`}
       </Button>
     </Box>
   );

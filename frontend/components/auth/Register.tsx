@@ -8,6 +8,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
+import { TypographyH2 } from '../common/Typography';
 import Container from '@mui/material/Container';
 import Router from 'next/router';
 import { register } from '../../api/auth';
@@ -89,7 +90,7 @@ function Register(props: Props) {
       <CssBaseline />
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: -4,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -98,9 +99,9 @@ function Register(props: Props) {
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component='h1' variant='h5' color={'black'}>
-          Sign up
-        </Typography>
+        <TypographyH2 variant='h5'>
+          Sign Up
+        </TypographyH2>
         <Box sx={{ mt: 3 }} color={'black'}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -146,7 +147,7 @@ function Register(props: Props) {
                 required
                 fullWidth
                 name='organizationId'
-                label='Organization Id'
+                label='Organization ID'
                 type='organizationId'
                 id='organizationId'
                 autoComplete='new-password'
@@ -173,7 +174,7 @@ function Register(props: Props) {
           <Grid container justifyContent='flex-end'>
             <Grid item>
               <Link href='/login' variant='body2'>
-                Already have an account? Sign in
+                Already Have An Account? Sign In
               </Link>
             </Grid>
           </Grid>

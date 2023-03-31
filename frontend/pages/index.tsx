@@ -102,9 +102,11 @@ function Hero() {
             color='text.secondary'
             fontWeight='normal'
           >
-            High performance Next.Js web application built with lots of powerful
-            Material-UI components across multiple product niches for fast &
-            perfect apps development processes
+            An online employee invoicing platform in which in each 
+            organization will be a company. This desktop application/website 
+            will help the members of an organization to keep track of their inventory/stock, 
+            as well as customers, supplier/manufacturers invoice/sales and purchase orders. 
+            When the order is placed, the invoice gets generated and sent to the customer via mail.
           </TypographyH2>
           <Button href='/dashboard' size='large' variant='contained'>
             Visit Dashboard
@@ -130,8 +132,9 @@ function Hero() {
                   <b>Powered by MUI (Material-UI)</b>
                 </Box>
                 <Typography component='span' variant='subtitle2'>
-                  A simple and customizable component library to build faster,
-                  beautiful, and accessible React apps.
+                  Material UI is a simple, customizable and comprehensive 
+                  library of components that features the implementation
+                  of Google's Material Design system.
                 </Typography>
               </Typography>
             </Grid>
@@ -144,8 +147,10 @@ function Hero() {
                   <b>Built with Next.js</b>
                 </Box>
                 <Typography component='span' variant='subtitle2'>
-                  Next.js gives you the best developer experience with all the
-                  features you need for production.
+                Next.js is an open-source web development framework 
+                created by Vercel providing 
+                React-based web applications with server-side 
+                rendering and static website generation.
                 </Typography>
               </Typography>
             </Grid>
@@ -156,10 +161,10 @@ function Hero() {
               <Typography variant='h4'>
                 <Box sx={{ pb: 2 }}>
                   <b>Built with Typescript</b>
-                </Box>
+                </Box>  
                 <Typography component='span' variant='subtitle2'>
                   Employee Invoicing features a modern technology stack and is
-                  built with Typescript.
+                  built with the help of Typescript along with other languages.
                 </Typography>
               </Typography>
             </Grid>

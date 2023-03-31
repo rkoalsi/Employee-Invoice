@@ -18,7 +18,7 @@ const CopyToClipboardButton = (props: { text: string; clickText: string }) => {
         open={open}
         onClose={() => setOpen(false)}
         autoHideDuration={2000}
-        message={`${props.text} Successfully Copied to clipboard`}
+        message={`${props.text} Successfully Copied To Clipboard`}
       />
     </>
   );

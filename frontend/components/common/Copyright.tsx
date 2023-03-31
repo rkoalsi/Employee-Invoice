@@ -1,15 +1,16 @@
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
+import { TypographyH2 } from './Typography';
 
 export default function Copyright(props: any) {
   return (
-    <Typography variant='body2' color='black' align='center' {...props}>
+    <TypographyH2 variant='body2' align='center' {...props}>
       {'Copyright © '}
-      <Link color='inherit' href='https://google.com/'>
+      <Link color='inherit' href=' '>
         Employee Invoice
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
-    </Typography>
+    </TypographyH2>
   );
 }

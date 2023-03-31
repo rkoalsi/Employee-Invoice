@@ -83,7 +83,7 @@ function Login(props: Props) {
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
-          <TypographyH2>Sign in</TypographyH2>
+          <TypographyH2>Sign In</TypographyH2>
           <Box
             component='form'
             onSubmit={onClickSignin}
@@ -113,7 +113,7 @@ function Login(props: Props) {
             />
             <FormControlLabel
               control={<Checkbox value='remember' />}
-              label='Remember me'
+              label='Remember Me'
             />
             <Button
               id='sign-in'
@@ -127,12 +127,12 @@ function Login(props: Props) {
             <Grid container>
               <Grid item xs>
                 <Link href='/forgot-password' variant='body2'>
-                  Forgot password?
+                  Forgot Password?
                 </Link>
               </Grid>
               <Grid item>
                 <Link href='/register' variant='body2'>
-                  {"Don't have an account? Sign Up"}
+                  {"Don't Have An Account? Sign Up"}
                 </Link>
               </Grid>
             </Grid>
