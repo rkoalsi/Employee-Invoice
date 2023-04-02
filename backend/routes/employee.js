@@ -25,7 +25,7 @@ async function employeesGraphData(req, res) {
         })
         .filter(
           (x) =>
-            x.startsWith(`${i}/`) && x.endsWith(`${new Date().getFullYear()}`)
+            x.startsWith(`${i}`) && x.endsWith(`${new Date().getFullYear()}`)
         ).length;
       arr.push(w);
     }

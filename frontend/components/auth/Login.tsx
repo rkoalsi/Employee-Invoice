@@ -83,7 +83,7 @@ function Login(props: Props) {
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
-          <TypographyH2>Sign In</TypographyH2>
+          <TypographyH2 variant='h5'>Sign In</TypographyH2>
           <Box
             component='form'
             onSubmit={onClickSignin}

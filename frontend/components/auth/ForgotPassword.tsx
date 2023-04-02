@@ -7,6 +7,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
+import { TypographyH2 } from '../common/Typography';
 import Container from '@mui/material/Container';
 import { login, resetPassword } from '../../api/auth';
 import Router from 'next/router';
@@ -86,9 +87,9 @@ function ForgotPassword(props: Props) {
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component='h1' variant='h5' color={'black'}>
+          <TypographyH2 variant='h5'>
             Forgot Password
-          </Typography>
+          </TypographyH2>
           <Box
             component='form'
             onSubmit={onClickSignin}
@@ -131,7 +132,7 @@ function ForgotPassword(props: Props) {
             <Grid container>
               <Grid item>
                 <Link href='/register' variant='body2'>
-                  {"Don't have an account? Sign Up"}
+                  {"Don't Have An Account? Sign Up"}
                 </Link>
               </Grid>
             </Grid>
