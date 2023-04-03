@@ -10,6 +10,7 @@ import {
 } from '../../api/customer';
 import CustomerTable from './CustomerTable';
 import { TypographyH2 } from '../common/Typography';
+import { capitalize } from '../../helpers/validators';
 
 interface Props {}
 
@@ -32,15 +33,20 @@ function Customers(props: Props) {
     try {
       const d = { ...values, organizationId: user.user.organizationId };
       const data = await createCustomer(d);
+      console.log(data);
+      console.log(data.status, data.status == 200);
+      if (data.status == 200) {
+        setMessage('Customer Successfully Created');
+        setShow(true);
+        setValues({ name: '', shop: '', gstin: '', phone: '', email: '' });
+      }
       if (Object.keys(data.data.errors).length > 0) {
         const err = Object.keys(data.data.errors);
         setMessage(
-          `${err.toString()} field(s) are missing. Product Creation Failed`
+          `${capitalize(
+            err.toString()
+          )} field(s) are missing. Customer Creation Failed`
         );
-        setShow(true);
-      } else if (data.status == 200) {
-        setMessage('Customer Successfully Created');
-        setValues({ name: '', shop: '', gstin: '', phone: '', email: '' });
         setShow(true);
       }
     } catch (error) {
@@ -126,9 +132,7 @@ function Customers(props: Props) {
         onClose={() => setShow(false)}
         message={message}
       />
-      <TypographyH2>
-        Total Number of Customers: {data.length}
-      </TypographyH2>
+      <TypographyH2>Total Number of Customers: {data.length}</TypographyH2>
       <CustomersDrawer
         onChange={onChange}
         values={values}

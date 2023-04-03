@@ -3,7 +3,11 @@ import { useUserContext } from '../../context/user';
 import { Box, Snackbar, Switch } from '@mui/material';
 import EmployeesDrawer from './EmployeesDrawer';
 import EmployeeTable from './EmployeeTable';
-import { EMPLOYEE_VERIFICATION_SCHEMA } from '../../helpers/validators';
+import {
+  EMPLOYEE_VERIFICATION_SCHEMA,
+  capitalize,
+  transformYupErrorsIntoObject,
+} from '../../helpers/validators';
 import {
   getEmployees,
   createEmployee,
@@ -66,24 +70,24 @@ function Employees(props: Props) {
         console.log(values);
         const d = {
           ...values,
-          designation:
-            values.role.charAt(0).toUpperCase() + values.role.slice(1),
+          designation: capitalize(values.role),
           organizationId: user.user.organizationId,
         };
         const res = await createEmployee(d);
         if (res.status == 200) {
           setMessage(
-            `Successfully Created ${
-              res.data.user.role.charAt(0).toUpperCase() +
-              res.data.user.role.slice(1)
-            }, Password is ${res.data.password} `
+            `Successfully Created ${capitalize(
+              res.data.user.role
+            )}, Password is ${res.data.password} `
           );
           setShow(true);
           setOpen(false);
         }
       }
     } catch (err: any) {
-      console.log(err);
+      const error = transformYupErrorsIntoObject(err);
+      setMessage(Object.values(error).join(', '));
+      setShow(true);
     }
   };
   const onClickDelete = async (r: { _id: string }) => {

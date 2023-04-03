@@ -31,17 +31,14 @@ function Organization(props: Props) {
         p={2}
         border={'1px solid gray'}
       >
-      <TypographyH2>
-        Organization ID = {user?.user?.organizationId}
-      </TypographyH2>
+        <TypographyH2>
+          Organization ID = {user?.user?.organizationId}
+        </TypographyH2>
         <CopyToClipboardButton
           text={'Organization ID'}
           clickText={user?.user?.organizationId}
         />
       </Box>
-      <Button onClick={() => router.push(`/${user?.user?.organizationId}`)}>
-        {`Go To Organization's Page`}
-      </Button>
     </Box>
   );
 }

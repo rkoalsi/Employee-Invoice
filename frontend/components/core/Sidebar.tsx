@@ -34,44 +34,59 @@ interface SubNavigationProps {
   value: string;
   icon: React.ReactComponentElement<any, any>;
 }
-const NAVIGATION: NavigationProps<string> = {
-  customer: [{ label: 'Home', value: '/', icon: <Home /> }],
-  employee: [
-    { label: 'Home', value: '/', icon: <Home /> },
-    { label: 'Dashboard', value: '/dashboard', icon: <Dashboard /> },
-    { label: 'Customers', value: '/customers', icon: <GroupOutlined /> },
-    { label: 'Products', value: '/products', icon: <ShoppingBasketOutlined /> },
-    { label: 'Estimates', value: '/estimates', icon: <ArticleOutlined /> },
-    {
-      label: 'Sales Orders',
-      value: '/sales-orders',
-      icon: <Inventory2Outlined />,
-    },
-    { label: 'Invoices', value: '/invoices', icon: <RequestPageOutlined /> },
-  ],
-  admin: [
-    { label: 'Home', value: '/', icon: <Home /> },
-    { label: 'Dashboard', value: '/dashboard', icon: <Dashboard /> },
-    { label: 'Employees', value: '/employees', icon: <PeopleOutline /> },
-    {
-      label: 'Organization',
-      value: '/organization',
-      icon: <CorporateFareOutlined />,
-    },
-    { label: 'Customers', value: '/customers', icon: <GroupOutlined /> },
-    { label: 'Products', value: '/products', icon: <ShoppingBasketOutlined /> },
-    { label: 'Estimates', value: '/estimates', icon: <ArticleOutlined /> },
-    {
-      label: 'Sales Orders',
-      value: '/sales-orders',
-      icon: <Inventory2Outlined />,
-    },
-    { label: 'Invoices', value: '/invoices', icon: <RequestPageOutlined /> },
-  ],
-};
 
 export default function Sidebar() {
   const [user, setUser] = useUserContext();
+  const NAVIGATION: NavigationProps<string> = {
+    customer: [
+      { label: 'Home', value: '/', icon: <Home /> },
+      {
+        label: 'Organization',
+        value: `/${user?.user?.organizationId}`,
+        icon: <CorporateFareOutlined />,
+      },
+    ],
+    employee: [
+      { label: 'Home', value: '/', icon: <Home /> },
+      { label: 'Dashboard', value: '/dashboard', icon: <Dashboard /> },
+      { label: 'Customers', value: '/customers', icon: <GroupOutlined /> },
+      {
+        label: 'Products',
+        value: '/products',
+        icon: <ShoppingBasketOutlined />,
+      },
+      { label: 'Estimates', value: '/estimates', icon: <ArticleOutlined /> },
+      {
+        label: 'Sales Orders',
+        value: '/sales-orders',
+        icon: <Inventory2Outlined />,
+      },
+      { label: 'Invoices', value: '/invoices', icon: <RequestPageOutlined /> },
+    ],
+    admin: [
+      { label: 'Home', value: '/', icon: <Home /> },
+      { label: 'Dashboard', value: '/dashboard', icon: <Dashboard /> },
+      { label: 'Employees', value: '/employees', icon: <PeopleOutline /> },
+      {
+        label: 'Organization',
+        value: '/organization',
+        icon: <CorporateFareOutlined />,
+      },
+      { label: 'Customers', value: '/customers', icon: <GroupOutlined /> },
+      {
+        label: 'Products',
+        value: '/products',
+        icon: <ShoppingBasketOutlined />,
+      },
+      { label: 'Estimates', value: '/estimates', icon: <ArticleOutlined /> },
+      {
+        label: 'Sales Orders',
+        value: '/sales-orders',
+        icon: <Inventory2Outlined />,
+      },
+      { label: 'Invoices', value: '/invoices', icon: <RequestPageOutlined /> },
+    ],
+  };
   const onClickSignOut = () => {
     setUser({});
     Router.push('/login');

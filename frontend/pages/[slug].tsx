@@ -2,6 +2,7 @@ import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import { getOrganizations } from '../api/organizations';
 import { Box, Card, Typography, CardContent } from '@mui/material';
+import Main from '../components/common/Main';
 interface Data {
   _id: string;
   name: string;
@@ -21,77 +22,92 @@ function OrganizationPage(props: { data: Data; hasError: boolean }) {
     return <h1>Loading...</h1>;
   }
   return (
-    <Box
-      display={'flex'}
-      alignItems={'center'}
-      justifyContent={'center'}
-      flexDirection={'column'}
-      gap={'8px'}
-      mt={'32px'}
-    >
-      <Card style={{ textAlign: 'center', width: '725px', height: '300px' }}>
-        <CardContent>
-          <Typography variant='h2'>
-            Organization Name: {props.data.name}
-          </Typography>
-          <Typography variant='h2'>GSTIN: {props.data.gstin}</Typography>
-          <Typography variant='h2'>Location: {props.data.location}</Typography>
-        </CardContent>
-      </Card>
-      <Typography variant='h2'>{`Organization's Products`}</Typography>
+    <Main>
       <Box
         display={'flex'}
         alignItems={'center'}
         justifyContent={'center'}
-        flexDirection={'row'}
+        flexDirection={'column'}
         gap={'8px'}
+        mt={'32px'}
       >
-        {props.data.products?.length > 0 &&
-          props.data.products?.map((d: any) => (
-            <Box
-              key={d.name}
-              sx={{
-                '&:hover': {
-                  cursor: 'pointer',
-                },
-              }}
-            >
-              <Card
-                style={{
-                  textAlign: 'center',
-                  width: 'fit-content',
-                  height: '275px',
+        <Card style={{ textAlign: 'center', width: '725px', height: '150px' }}>
+          <CardContent>
+            <Typography variant='h2'>
+              Organization Name: {props.data.name}
+            </Typography>
+            <Typography variant='h2'>GSTIN: {props.data.gstin}</Typography>
+            <Typography variant='h2'>
+              Location: {props.data.location}
+            </Typography>
+          </CardContent>
+        </Card>
+        <Typography
+          variant='h2'
+          mt={'32px'}
+        >{`Organization's Products`}</Typography>
+        <Box
+          display={'flex'}
+          alignItems={'center'}
+          justifyContent={'center'}
+          flexDirection={'row'}
+          gap={'16px'}
+        >
+          {props.data.products?.length > 0 &&
+            props.data.products?.map((d: any) => (
+              <Box
+                key={d.name}
+                sx={{
+                  '&:hover': {
+                    cursor: 'pointer',
+                  },
                 }}
-                onClick={() => onClickProduct(d)}
               >
-                <CardContent>
-                  <Typography
-                    variant='h3'
-                    style={{ textDecorationLine: 'underline' }}
-                    key={d.name}
-                  >
-                    {d.name}
-                  </Typography>
-                  <Typography
-                    variant='h3'
-                    style={{ textDecorationLine: 'underline' }}
-                    key={d.price}
-                  >
-                    INR {d.price}
-                  </Typography>
-                  <Typography
-                    variant='h3'
-                    style={{ textDecorationLine: 'underline' }}
-                    key={d.stock}
-                  >
-                    {d.stock} pcs
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Box>
-          ))}
+                <Card
+                  style={{
+                    textAlign: 'center',
+                    width: 'fit-content',
+                    height: '175px',
+                  }}
+                  onClick={() => onClickProduct(d)}
+                >
+                  <CardContent>
+                    <Box
+                      display={'flex'}
+                      alignItems={'center'}
+                      justifyContent={'center'}
+                      flexDirection={'column'}
+                      gap={'16px'}
+                    >
+                      <Typography
+                        variant='h3'
+                        style={{ textDecorationLine: 'underline' }}
+                        key={d.name}
+                      >
+                        {d.name}
+                      </Typography>
+                      <Typography
+                        variant='h3'
+                        style={{ textDecorationLine: 'underline' }}
+                        key={d.price}
+                      >
+                        INR {d.price}
+                      </Typography>
+                      <Typography
+                        variant='h3'
+                        style={{ textDecorationLine: 'underline' }}
+                        key={d.stock}
+                      >
+                        {d.stock} pcs
+                      </Typography>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </Box>
+            ))}
+        </Box>
       </Box>
-    </Box>
+    </Main>
   );
 }
 

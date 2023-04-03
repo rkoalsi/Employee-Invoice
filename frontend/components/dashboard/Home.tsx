@@ -68,16 +68,17 @@ function Home(props: Props) {
   };
   React.useEffect(() => {
     getData();
+    console.log(user);
   }, [user]);
   const onClickSignOut = () => {
     setUser({});
     Router.push('/login');
   };
-  const onClickDashboard = () => {
-    Router.push('/dashboard');
+  const onClickHome = () => {
+    Router.push('/');
   };
 
-  if (user && user.token) {
+  if (user && user.token && user.user.role === ('admin' || 'employee')) {
     return (
       <Box
         component='span'
@@ -162,7 +163,27 @@ function Home(props: Props) {
       </Box>
     );
   }
-
+  if (user?.user?.role === 'customer') {
+    return (
+      <Box
+        component='span'
+        m={8}
+        gap={'2px'}
+        display='flex'
+        flexDirection={'column'}
+        justifyContent='center'
+        alignItems='center'
+      >
+        <Typography variant={'h2'}>
+          Welcome {user.user.name[0].toUpperCase() + user.user.name.slice(1)}.
+        </Typography>
+        <br />
+        <Typography variant={'h3'}>
+          You are a {user.user.role[0].toUpperCase() + user.user.role.slice(1)}
+        </Typography>
+      </Box>
+    );
+  }
   return (
     <Box
       m={8}
@@ -175,8 +196,8 @@ function Home(props: Props) {
       <Button variant={'outlined'} onClick={onClickSignOut}>
         Log In
       </Button>
-      <Button variant={'outlined'} onClick={onClickDashboard}>
-        Go to Dashboard
+      <Button variant={'outlined'} onClick={onClickHome}>
+        Go to Home
       </Button>
     </Box>
   );

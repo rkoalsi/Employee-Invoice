@@ -1009,6 +1009,7 @@ export const NebulaFighterTheme = createTheme({
         message: {
           lineHeight: 1.5,
           fontSize: 14,
+          color: colors.alpha.trueWhite[70],
         },
         standardInfo: {
           color: colors.info.main,

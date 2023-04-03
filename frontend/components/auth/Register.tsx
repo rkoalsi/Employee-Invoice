@@ -71,7 +71,7 @@ function Register(props: Props) {
         setData({ ...data, password: str });
         break;
       case 'designation':
-        setData({ ...data, designation: str });
+        setData({ ...data, designation: str, role: str.toLowerCase() });
         break;
       case 'name':
         setData({ ...data, name: str });
@@ -99,9 +99,7 @@ function Register(props: Props) {
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <LockOutlinedIcon />
         </Avatar>
-        <TypographyH2 variant='h5'>
-          Sign Up
-        </TypographyH2>
+        <TypographyH2 variant='h5'>Sign Up</TypographyH2>
         <Box sx={{ mt: 3 }} color={'black'}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
