@@ -206,6 +206,8 @@ function SalesOrders(props: Props) {
         ]}
         rows={salesOrders}
         open={open}
+        setShow={setShow}
+        setMessage={setMessage}
         setOpen={setOpen}
         setValues={setValues}
         setIsEdit={setIsEdit}

@@ -12,6 +12,16 @@ export interface ProductData {
   updated_at: string;
   __v: number;
 }
+export interface OrganizationData {
+  _id: string;
+  name: string;
+  gstin: string;
+  location: string;
+  created_at: string;
+  updated_at: string;
+  __v: number;
+  products: ProductData[];
+}
 
 export interface InvoiceData {
   _id: string;
