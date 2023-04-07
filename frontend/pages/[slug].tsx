@@ -24,6 +24,7 @@ import React from 'react';
 import { createPurchase } from '../api/purchase';
 import { ArrowBackIosNewOutlined } from '@mui/icons-material';
 import { OrganizationData, ProductData } from '../types';
+import { capitalize } from '../helpers/validators';
 interface Data {
   _id: string;
   name: string;
@@ -34,34 +35,34 @@ interface Data {
   __v: number;
   products: [];
 }
+
 interface Products {
-  productId?: string;
+  product?: string;
   amount: number;
+}
+interface Values {
+  name: string;
+  email: string;
+  address: string;
+  amount: string | number;
+  total: string | number;
+  phone: string | number;
+  createdBy: string;
+  organizationId: string;
+  products: Products[];
 }
 function OrganizationPage(props: { data: Data; hasError: boolean }) {
   const router = useRouter();
   const [next, setNext] = React.useState(false);
   const [existingCustomer, setExistingCustomer] = React.useState(false);
   const [message, setMessage] = React.useState(`Enter Amount To Buy`);
-  const [val, setVal] = React.useState<{
-    name: string;
-    email: string;
-    address: string;
-    amount: string | number;
-    total: string | number;
-    phone: string | number;
-    productId: string;
-    createdBy: string;
-    organizationId: string;
-    products: Products[];
-  }>({
+  const [val, setVal] = React.useState<Values>({
     name: '',
     email: '',
     address: '',
     products: [],
     amount: '' && 0,
     total: '' && 0,
-    productId: '',
     organizationId: '',
     createdBy: '',
     phone: '' && 0,
@@ -89,7 +90,7 @@ function OrganizationPage(props: { data: Data; hasError: boolean }) {
   const handleNext = () => {
     setNext(true);
   };
-  const handleChange = (str: string, i?: number, e?: any) => {
+  const handleChange = (str: string, e?: any) => {
     switch (str) {
       case 'name':
         setVal({ ...val, name: e });
@@ -101,16 +102,25 @@ function OrganizationPage(props: { data: Data; hasError: boolean }) {
         setVal({ ...val, address: e });
         break;
       case 'organizationId':
-        // var tot = Number(data.price) * Number(val.amount);
-        // var tax = tot * (Number(data.gst) / 100);
-        // var total = tot + tax;
-        // setVal({
-        //   ...val,
-        //   organizationId: data.organizationId,
-        //   productId: data._id,
-        //   createdBy: data.createdBy,
-        //   total: Number(total),
-        // });
+        setVal({
+          ...val,
+          createdBy: data?.products[0]._id,
+          organizationId: data?._id,
+          products: qty,
+          total: qty
+            ?.map((q) => {
+              var total = 0;
+              data?.products.map((d) => {
+                if (q.product == d._id) {
+                  var tot = Number(d.price) * Number(q.amount);
+                  var tax = tot * (Number(d.gst) / 100);
+                  total = tot + tax;
+                }
+              });
+              return total;
+            })
+            .reduce((n, a) => n + a, 0),
+        });
         break;
       case 'phone':
         setVal({ ...val, phone: Number(e) });
@@ -124,7 +134,7 @@ function OrganizationPage(props: { data: Data; hasError: boolean }) {
   };
   const q = data?.products
     .map((d: ProductData): Products[] => ({
-      productId: d._id,
+      product: d._id,
       amount: 0,
     }))
     .flat();
@@ -133,7 +143,7 @@ function OrganizationPage(props: { data: Data; hasError: boolean }) {
   }, [data?.products]);
   const onChangeQty = (id: string, index: number, e: any) => {
     var qt = [...qty];
-    qt[index] = { productId: id, amount: Number(e) };
+    qt[index] = { product: id, amount: Number(e) };
     setQty(qt);
     setVal({ ...val, amount: qt?.reduce((n, { amount }) => n + amount, 0) });
   };
@@ -143,19 +153,18 @@ function OrganizationPage(props: { data: Data; hasError: boolean }) {
   const [open, setOpen] = React.useState(false);
   const [sOpen, setsOpen] = React.useState(false);
   const handleOpen = () => {
-    console.log(val);
-    if (data) {
+    if (data && qty) {
       handleChange('organizationId');
     }
     if (val.amount === '' || val.amount === 0) {
       setsOpen(true);
     }
-    if (val.amount > props?.data?.products[0]?.stock) {
-      setsOpen(true);
-      setMessage('Quantity to be purchased is more than actual stock');
-    } else {
-      setOpen(true);
-    }
+    // if (val.amount > props?.data?.products[0]?.stock) {
+    //   setsOpen(true);
+    //   setMessage('Quantity to be purchased is more than actual stock');
+    // } else {
+    setOpen(true);
+    // }
   };
   const handleClose = () => {
     setNext(false);
@@ -165,10 +174,21 @@ function OrganizationPage(props: { data: Data; hasError: boolean }) {
   const handleSubmit = async () => {
     handleClose();
     const res = await createPurchase(val);
-    if (res.data) {
-      setMessage(res.data);
-      setsOpen(true);
-      refreshData();
+    if (Object.keys(res.data).length > 0) {
+      if (res.data && !res.data.errors) {
+        setMessage(res.data);
+        setsOpen(true);
+        refreshData();
+      }
+      if (res.data.errors && Object.keys(res.data.errors).length > 0) {
+        const err = Object.keys(res.data.errors);
+        setMessage(
+          `${capitalize(
+            err.toString()
+          )} field(s) are missing. Customer Creation Failed`
+        );
+        setsOpen(true);
+      }
     }
   };
   const onClickProduct = (d: any) => {
@@ -274,12 +294,12 @@ function OrganizationPage(props: { data: Data; hasError: boolean }) {
                       id='outlined-number'
                       label='Quantity'
                       type='number'
-                      // InputProps={{
-                      //   inputProps: {
-                      //     pattern: '[0-9]*',
-                      //     min: 1,
-                      //   },
-                      // }}
+                      InputProps={{
+                        inputProps: {
+                          pattern: '[0-9]*',
+                          min: 0,
+                        },
+                      }}
                       value={qty ? qty[i].amount : 0}
                       onChange={(e) => onChangeQty(d._id, i, e.target.value)}
                     />

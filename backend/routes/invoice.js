@@ -146,7 +146,6 @@ async function deleteInvoice(req, res) {
 
 async function emailInvoice(req, res) {
   const { id, email } = req.body;
-  console.log(req.body);
   try {
     const inv = await Invoice.findById(id)
       .populate('customer')
@@ -161,14 +160,22 @@ async function emailInvoice(req, res) {
     });
     data['products'] = products;
     data['client']['company'] = inv.customer.shop;
-    data['information']['number'] = inv._id;
+    data['information']['number'] = `INV-${inv._id
+      .toString()
+      .slice(-3)
+      .toUpperCase()}`;
     generateInvoice(data);
+    console.log(0, 'done');
     await sendMail({ to: email });
     await Invoice.updateOne({ _id: id }, { sentEmail: true });
-    const inv2 = await Invoice.findById(id)
-      .populate('customer')
-      .populate('products.product');
-    res.send(inv2);
+    // const inv2 = await Invoice.findById(id)
+    //   .populate('customer')
+    //   .populate('products.product');
+    // if (!multiple) {
+    //   res.send(inv2);
+    // } else {
+    //   return 'Products Purchased. Email Sent.';
+    // }
   } catch (error) {
     res.send(error);
   }

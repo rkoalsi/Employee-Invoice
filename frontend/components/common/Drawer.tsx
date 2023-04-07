@@ -18,7 +18,7 @@ export default function BDrawer(props: any) {
     setOpen(open);
   };
   return (
-    <Container>
+    <Container style={{ marginTop: '50px' }}>
       <React.Fragment key={'right'}>
         <Button
           onClick={() => {

@@ -12,12 +12,10 @@ async function createPurchase(req, res) {
     phone,
     organizationId,
     address,
-    productId,
+    products,
     total,
-    amount,
     createdBy,
   } = req.body;
-  const products = [{ product: productId, amount }];
   try {
     const cust = await Customer.findOne({ email });
     var customer = {};
@@ -49,6 +47,10 @@ async function createPurchase(req, res) {
       estimate: est._id,
     });
     const productIds = products.map((p) => p.product);
+    var multiple = false;
+    if (products.length > 1) {
+      multiple = true;
+    }
     productIds.map(async (p, i) => {
       const product = await Product.findOne({ _id: p });
       await Product.updateOne(
@@ -72,9 +74,10 @@ async function createPurchase(req, res) {
     );
     delete req.body;
     req.body = { id: inv._id, email: customer.email };
-    res.send(`Product Purchased. Email Sent.`);
     await emailInvoice(req, res);
+    res.send('Products Purchased. Email Sent');
   } catch (error) {
+    console.log(error);
     res.send(error);
   }
 }

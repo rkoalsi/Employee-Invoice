@@ -10,7 +10,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import styled from 'styled-components';
 import Router from 'next/router';
 import { useUserContext } from '../../context/user';
-import { Button } from '@mui/material';
 import {
   ArticleOutlined,
   CorporateFareOutlined,
@@ -69,7 +68,7 @@ export default function Sidebar() {
       { label: 'Employees', value: '/employees', icon: <PeopleOutline /> },
       {
         label: 'Organization',
-        value: '/organization',
+        value: `/${user?.user?.organizationId}`,
         icon: <CorporateFareOutlined />,
       },
       { label: 'Customers', value: '/customers', icon: <GroupOutlined /> },
@@ -87,10 +86,7 @@ export default function Sidebar() {
       { label: 'Invoices', value: '/invoices', icon: <RequestPageOutlined /> },
     ],
   };
-  const onClickSignOut = () => {
-    setUser({});
-    Router.push('/login');
-  };
+
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -165,24 +161,6 @@ export default function Sidebar() {
           onClose={toggleDrawer('left', false)}
         >
           {list('left')}
-          <Box
-            bottom={0}
-            component='span'
-            m={1}
-            gap={'8px'}
-            display='flex'
-            justifyContent='center'
-            alignItems='center'
-          >
-            <Button
-              variant='contained'
-              color='primary'
-              sx={{ height: 40 }}
-              onClick={onClickSignOut}
-            >
-              Sign Out
-            </Button>
-          </Box>
         </Drawer>
       </React.Fragment>
     </Container>
