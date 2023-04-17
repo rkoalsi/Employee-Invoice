@@ -339,7 +339,7 @@ function OrganizationPage(props: { data: Data; hasError: boolean }) {
               InputProps={{
                 inputProps: {
                   pattern: '[0-9]*',
-                  min: 1,
+                  min: 0,
                 },
               }}
               value={val.amount}
