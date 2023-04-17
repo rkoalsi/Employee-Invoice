@@ -18,14 +18,14 @@ describe('Product Flow', () => {
     const price = generateRandomNumber();
     const hsn = generateRandomNumber();
     const stock = generateRandomNumber();
-    cy.get('.MuiButtonBase-root').click();
+    cy.get('#add', { timeout: 60000 }).click({ multiple: true });
     cy.get('#name').click().type(name);
     cy.get('#sku').click().type(sku);
     cy.get('#gst').click().type(gst);
     cy.get('#price').click().type(price);
     cy.get('#hsn').click().type(hsn);
     cy.get('#stock').click().type(stock);
-    cy.get('.MuiButton-outlinedPrimary').click();
+    cy.get('.MuiButton-containedPrimary').click();
     cy.get('#product-table').should('contain', name);
     cy.get('#product-table').should('contain', sku);
     cy.get('#product-table').should('contain', gst);
@@ -38,12 +38,12 @@ describe('Product Flow', () => {
     cy.get('.MuiButton-outlinedPrimary').click();
     cy.get('#product-table').should('contain', newName);
     /* Delete Product */
-    // cy.get('#delete-product').click();
-    // cy.get('#product-table').should('not.contain', newName);
-    // cy.get('#product-table').should('not.contain', sku);
-    // cy.get('#product-table').should('not.contain', gst);
-    // cy.get('#product-table').should('not.contain', price);
-    // cy.get('#product-table').should('not.contain', hsn);
-    // cy.get('#product-table').should('not.contain', stock);
+    cy.get('#delete-product').click();
+    cy.get('#product-table').should('not.contain', newName);
+    cy.get('#product-table').should('not.contain', sku);
+    cy.get('#product-table').should('not.contain', gst);
+    cy.get('#product-table').should('not.contain', price);
+    cy.get('#product-table').should('not.contain', hsn);
+    cy.get('#product-table').should('not.contain', stock);
   });
 });

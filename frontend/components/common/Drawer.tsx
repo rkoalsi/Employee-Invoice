@@ -21,6 +21,7 @@ export default function BDrawer(props: any) {
     <Container style={{ marginTop: '50px' }}>
       <React.Fragment key={'right'}>
         <Button
+          id={'add'}
           onClick={() => {
             toggleDrawer(true);
             setIsEdit(false);

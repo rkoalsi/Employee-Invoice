@@ -36,10 +36,11 @@ interface Data {
   products: [];
 }
 
-interface Products {
-  product?: string;
+type Products = {
+  product: string;
   amount: number;
-}
+  [key: string]: any;
+};
 interface Values {
   name: string;
   email: string;
@@ -102,25 +103,27 @@ function OrganizationPage(props: { data: Data; hasError: boolean }) {
         setVal({ ...val, address: e });
         break;
       case 'organizationId':
-        setVal({
-          ...val,
-          createdBy: data?.products[0]._id,
-          organizationId: data?._id,
-          products: qty,
-          total: qty
-            ?.map((q) => {
-              var total = 0;
-              data?.products.map((d) => {
-                if (q.product == d._id) {
-                  var tot = Number(d.price) * Number(q.amount);
-                  var tax = tot * (Number(d.gst) / 100);
-                  total = tot + tax;
-                }
-              });
-              return total;
-            })
-            .reduce((n, a) => n + a, 0),
-        });
+        if (data?.products && data?._id && qty) {
+          setVal({
+            ...val,
+            createdBy: data.products[0]._id,
+            organizationId: data._id,
+            products: qty,
+            total: qty
+              ?.map((q) => {
+                var total = 0;
+                data?.products.map((d) => {
+                  if (q.product == d._id) {
+                    var tot = Number(d.price) * Number(q.amount);
+                    var tax = tot * (Number(d.gst) / 100);
+                    total = tot + tax;
+                  }
+                });
+                return total;
+              })
+              .reduce((n, a) => n + a, 0),
+          });
+        }
         break;
       case 'phone':
         setVal({ ...val, phone: Number(e) });
@@ -133,7 +136,7 @@ function OrganizationPage(props: { data: Data; hasError: boolean }) {
     }
   };
   const q = data?.products
-    .map((d: ProductData): Products[] => ({
+    .map((d: ProductData): any => ({
       product: d._id,
       amount: 0,
     }))
@@ -142,10 +145,12 @@ function OrganizationPage(props: { data: Data; hasError: boolean }) {
     setQty(q);
   }, [data?.products]);
   const onChangeQty = (id: string, index: number, e: any) => {
-    var qt = [...qty];
-    qt[index] = { product: id, amount: Number(e) };
-    setQty(qt);
-    setVal({ ...val, amount: qt?.reduce((n, { amount }) => n + amount, 0) });
+    if (qty) {
+      var qt = [...qty];
+      qt[index] = { product: id, amount: Number(e) };
+      setQty(qt);
+      setVal({ ...val, amount: qt?.reduce((n, { amount }) => n + amount, 0) });
+    }
   };
   const refreshData = () => {
     router.replace(router.asPath);

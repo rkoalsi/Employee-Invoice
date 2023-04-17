@@ -1,4 +1,4 @@
-export interface ProductData {
+export type ProductData = {
   _id: string;
   name: string;
   sku: string;
@@ -11,7 +11,7 @@ export interface ProductData {
   created_at: string;
   updated_at: string;
   __v: number;
-}
+};
 export interface OrganizationData {
   _id: string;
   name: string;

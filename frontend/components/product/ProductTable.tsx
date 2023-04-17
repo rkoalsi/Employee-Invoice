@@ -30,14 +30,14 @@ export default function ProductTable(props: any) {
               key={row.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component='th' scope='row'>
+              <TableCell component='th' scope='row' id={'#name'}>
                 {row.name}
               </TableCell>
-              <TableCell>{row.sku}</TableCell>
-              <TableCell>{row.hsn}</TableCell>
-              <TableCell>{row.gst}</TableCell>
-              <TableCell>{row.price}</TableCell>
-              <TableCell>{row.stock}</TableCell>
+              <TableCell id={'#sku'}>{row.sku}</TableCell>
+              <TableCell id={'#hsn'}>{row.hsn}</TableCell>
+              <TableCell id={'#gst'}>{row.gst}</TableCell>
+              <TableCell id={'#price'}>{row.price}</TableCell>
+              <TableCell id={'#stock'}>{row.stock}</TableCell>
               <TableCell>
                 <DeleteForever
                   onClick={() => deleteData(row._id)}
