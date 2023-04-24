@@ -102,25 +102,15 @@ function Hero() {
             color='text.secondary'
             fontWeight='normal'
           >
-            An online employee invoicing platform in which in each 
-            organization will be a company. This desktop application/website 
-            will help the members of an organization to keep track of their inventory/stock, 
-            as well as customers, supplier/manufacturers invoice/sales and purchase orders. 
-            When the order is placed, the invoice gets generated and sent to the customer via mail.
+            An online employee invoicing platform in which in each organization
+            will be a company. This desktop application/website will help the
+            members of an organization to keep track of their inventory/stock,
+            as well as customers, supplier/manufacturers invoice/sales and
+            purchase orders. When the order is placed, the invoice gets
+            generated and sent to the customer via mail.
           </TypographyH2>
           <Button href='/dashboard' size='large' variant='contained'>
             Visit Dashboard
-          </Button>
-          <Button
-            sx={{ ml: 2 }}
-            component='a'
-            target='_blank'
-            rel='noopener'
-            // href='https://bloomui.com/product/tokyo-free-black-nextjs-javascript-material-ui-admin-dashboard/'
-            size='large'
-            variant='text'
-          >
-            Key Features
           </Button>
           <Grid container spacing={3} mt={5}>
             <Grid item md={4}>
@@ -132,9 +122,9 @@ function Hero() {
                   <b>Powered by MUI (Material-UI)</b>
                 </Box>
                 <Typography component='span' variant='subtitle2'>
-                  Material UI is a simple, customizable and comprehensive 
-                  library of components that features the implementation
-                  of Google's Material Design system.
+                  Material UI is a simple, customizable and comprehensive
+                  library of components that features the implementation of
+                  Google's Material Design system.
                 </Typography>
               </Typography>
             </Grid>
@@ -147,10 +137,9 @@ function Hero() {
                   <b>Built with Next.js</b>
                 </Box>
                 <Typography component='span' variant='subtitle2'>
-                Next.js is an open-source web development framework 
-                created by Vercel providing 
-                React-based web applications with server-side 
-                rendering and static website generation.
+                  Next.js is an open-source web development framework created by
+                  Vercel providing React-based web applications with server-side
+                  rendering and static website generation.
                 </Typography>
               </Typography>
             </Grid>
@@ -161,7 +150,7 @@ function Hero() {
               <Typography variant='h4'>
                 <Box sx={{ pb: 2 }}>
                   <b>Built with Typescript</b>
-                </Box>  
+                </Box>
                 <Typography component='span' variant='subtitle2'>
                   Employee Invoicing features a modern technology stack and is
                   built with the help of Typescript along with other languages.
